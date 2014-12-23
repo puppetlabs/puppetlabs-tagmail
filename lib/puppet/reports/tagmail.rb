@@ -122,7 +122,6 @@ Puppet::Reports.register_report(:tagmail) do
 
   # Send the email reports.
   def send(reports)
-    #pid = Puppet::Util.Execution.execute do
     Thread.new {
       if Puppet[:smtpserver] != "none"
         begin
@@ -163,10 +162,9 @@ Puppet::Reports.register_report(:tagmail) do
       else
         raise Puppet::Error, "SMTP server is unset and could not find sendmail"
       end
-    #end
     }
 
     # Don't bother waiting for the pid to return.
-    #Process.detach(pid)
+    Process.detach(pid)
   end
 end
