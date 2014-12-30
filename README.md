@@ -15,17 +15,19 @@ This is a plug-in replacement of the existing built-in tagmail report processor.
 ## Module Description
 
 This module is a [report processor](https://docs.puppetlabs.com/guides/reporting.html) plugin to generate a tagmail report. The tagmail report sends specific log messages via email based on the tags that are present in each log message. Tags allow users to set context for resources; for example, one can tag all resources that belong to a particular operating system, location, or any other characteristic. See the [documentation on tags](http://docs.puppetlabs.com/puppet/latest/reference/lang_tags.html) for more information. Tags can also be specified in the `puppet.conf` configuration file to tell the agents to apply only configurations tagged with the specified tags.
-The tagmail report uses the same tags to generate email reports. The tags assigned to the resources are added to the log results, and then Puppet generates email based on matching particular tags with particular email addresses. This matching is configured in a configuration file called `tagmail.conf`. By default, the tagmail.conf file is located in the $confdir directory. This is controlled by the tagmap configuration option in the puppet.conf file:
+The tagmail report uses the same tags to generate email reports. The tags assigned to the resources are added to the log results, and then Puppet generates email based on matching particular tags with particular email addresses. This matching is configured in a configuration file called `tagmail.conf`. By default, the tagmail.conf file is located in the $confdir directory. This is controlled by the tagmap configuration option in the puppet.conf file. Also ensure that `tagmail` is set as one of the (comma separated) values for the `reports` configuration as shown below:
 
 ```
 [master]
 tagmap = $confdir/tagmail.conf
+reports = puppetdb,console,tagmail
 ```
 
 On the agent ensure pluginsync is enabled. It is enabled by default.
 
 ```
 [agent]
+report = true
 pluginsync = true
 ```
 
