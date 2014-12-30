@@ -4,8 +4,9 @@
 
 1. [Overview](#overview)
 2. [Module Description - What the module does and why it is useful](#module-description)
-3. [Reference - An under-the-hood peek at what the module is doing and how](#reference)
-4. [Limitations - OS compatibility, etc.](#limitations)
+3. [Installation and Usage](#installation-and-usage)
+4. [Reference - An under-the-hood peek at what the module is doing and how](#reference)
+5. [Limitations - OS compatibility, etc.](#limitations)
 
 ## Overview
 
@@ -21,7 +22,16 @@ The tagmail report uses the same tags to generate email reports. The tags assign
 tagmap = $confdir/tagmail.conf
 ```
 
-To use this report, you must create a `tagmail.conf` file in the location specified by the `tagmap` setting. The value of the tagmap setting can be looked up using `puppet master --configprint tagmap` on the puppet master.  The `tagmail.conf` is a simple file that maps tags to email addresses:  Any log messages in the report that match the specified tags will be sent to the specified email addresses.  Lines in the `tagmail.conf` file consist of a comma-separated list of tags, a colon, and a comma-separated list of email addresses. Tags can be !negated with a leading exclamation mark, which will subtract any messages with that tag from the set of events handled by that line.
+On the agent ensure pluginsync is enabled. It is enabled by default.
+
+```
+[agent]
+pluginsync = true
+```
+
+## Installation and Usage
+
+To use this report, you must create a `tagmail.conf` file on the puppet master in the location specified by the `tagmap` setting. The value of the tagmap setting can be looked up using `puppet master --configprint tagmap` on the puppet master.  The `tagmail.conf` is a simple file that maps tags to email addresses:  Any log messages in the report that match the specified tags will be sent to the specified email addresses.  Lines in the `tagmail.conf` file consist of a comma-separated list of tags, a colon, and a comma-separated list of email addresses. Tags can be !negated with a leading exclamation mark, which will subtract any messages with that tag from the set of events handled by that line.
 
 Puppet's log levels (`debug`, `info`, `notice`, `warning`, `err`, `alert`, `emerg`, `crit`, and `verbose`) can also be used as tags, and there is an `all` tag that will always match all log messages.
 
@@ -36,11 +46,14 @@ This will send all messages to `me@domain.com`, and all messages from webservers
 If you are using anti-spam controls such as grey-listing on your mail server, you should whitelist the sending email address (controlled by `reportfrom` configuration option) to ensure your email is not discarded as spam.
 The tagmail.conf file contains a list of tags and email addresses separated by colons. Multiple tags and email addresses can be specified by separating them with commas.
 
+Other settings can also be optionally in puppet.conf to control the email notification settings: `smtpserver`, `smtpport`, `smtphelo`, `sendmail`.
+
 ## Reference
 
 This module has been built in direct response to the ticket below:
-
 https://tickets.puppetlabs.com/browse/SERVER-62
+
+It is based on the original [tagmail report processor](https://github.com/puppetlabs/puppet/blob/3.7.3/lib/puppet/reports/tagmail.rb) which is a part of core puppet.
 
 ## Limitations
 
