@@ -1,0 +1,11 @@
+{
+  "name": "mrpuppet-tagmail",
+  "version": "0.1.3",
+  "author": "mrpuppet",
+  "summary": "This module is a report processor plugin for re-enabling the tagmail feature in PE 3.7 onwards. Use this to have Puppet send emails based on tags",
+  "license": "Apache 2.0",
+  "source": "https://github.com/anokun7/tagmail",
+  "project_page": "https://github.com/anokun7/tagmail",
+  "issues_url": "https://github.com/anokun7/tagmail/issues",
+}
+
