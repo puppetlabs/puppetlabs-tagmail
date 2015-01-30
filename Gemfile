@@ -17,6 +17,7 @@ group :development, :unit_tests do
   gem 'puppet-lint',             :require => false
   gem 'pry',                     :require => false
   gem 'simplecov',               :require => false
+  gem 'rspec', '< 3.0.0'
 end
 
 group :system_tests do
