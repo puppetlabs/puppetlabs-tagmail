@@ -61,5 +61,24 @@ It is based on the original [tagmail report processor](https://github.com/puppet
 
 This module should be used only for PE >3.4 or Puppet 3.7 onwards and only if using the JVM on the puppet master. For older versions of Puppet or if using the legacy puppet master on Apache/Rack/Passenger, then the tagmail feature built into the core of Puppet should be used.
 
+## Changelog
 
+* Thomas Linkin <trlinkin@gmail.com> (FM-2223) Fix metadata.json to pass linting
+* Thomas Linkin <trlinkin@gmail.com> (FM-2223) Update metadata.json details
+* Thomas Linkin <trlinkin@gmail.com> (FM-2223) Add LICENSE file
+* James Sweeny <james.sweeny@puppetlabs.com> Merge pull request #1 from trlinkin/add_tests
+* Thomas Linkin <trlinkin@gmail.com> (FM-2223) Add unit tests and fixtures
+* Thomas Linkin <trlinkin@gmail.com> Set rspec-core < 3.0.0 in Gemfile
+* Thomas Linkin <trlinkin@gmail.com> (FM-2223) Add testing skeleton
+* Anoop V Kumar <anokun7@gmail.com> documentation of puppet.conf changes
+* Anoop V Kumar <anokun7@gmail.com> fixed metadata & added link to the original report processor
+* Anoop V Kumar <anokun7@gmail.com> fixed metadata & added link to the original report processor
+* Anoop V Kumar <anokun7@gmail.com> metadata summary cannot be more tha 144 chars. Updated license info
+* Anoop V Kumar <root@master.puppetlabs.vm> remove comma at end of json
+* Anoop V Kumar <root@master.puppetlabs.vm> Cleaned up the README and added metadata.json
+* anokun7 <anokun7@users.noreply.github.com> Create README.md
+* Anoop V Kumar <root@master.puppetlabs.vm> Removed detach(pid) and added comment about Thread.new
+* Anoop V Kumar <root@master.puppetlabs.vm> Removed commented lines
+* root <root@master.puppetlabs.vm> Thread.new
+* root <root@master.puppetlabs.vm> mail gets sent, using Execute.execute instead of safe_posix_fork
 
