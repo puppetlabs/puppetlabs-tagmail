@@ -80,7 +80,7 @@ Puppet::Reports.register_report(:tagmail) do
       pos = []
       neg = []
       taglist.sub(/\s+$/,'').split(/\s*,\s*/).each do |tag|
-        unless tag =~ /^!?[-\w\.]+$/
+        unless tag =~ /^!?(?:(::)?[-\w\.]+)*$/
           raise ArgumentError, "Invalid tag #{tag.inspect}"
         end
         case tag
