@@ -10,7 +10,7 @@
 
 ## Overview
 
-This is a plug-in replacement of the existing built-in tagmail report processor. Tagmail is a very often used feature in Puppet. It is used to send email notifications based on tags associated to resources or classes. The tagmail feature is broken in the JVM based PE 3.4 and is scheduled to be completely removed in PE 4.0. This is a module that provides an alternative and replaces the same functionality as available in tagmail prior to PE 3.4.
+This is a plug-in replacement of the existing built-in tagmail report processor. Tagmail is a very often used feature in Puppet. It is used to send email notifications based on tags associated to resources or classes. The tagmail feature is broken in the JVM based PE 3.7 and is scheduled to be completely removed in PE 4.0. This is a module that provides an alternative and replaces the same functionality as available in tagmail prior to PE 3.7.
 
 ## Module Description
 
@@ -59,7 +59,4 @@ It is based on the original [tagmail report processor](https://github.com/puppet
 
 ## Limitations
 
-This module should be used only for PE >3.4 or Puppet 3.7 onwards and only if using the JVM on the puppet master. For older versions of Puppet or if using the legacy puppet master on Apache/Rack/Passenger, then the tagmail feature built into the core of Puppet should be used.
-
-
-
+This module should be used only for PE >3.7 or Puppet 3.7 onwards and only if using the JVM on the puppet master. For older versions of Puppet or if using the legacy puppet master on Apache/Rack/Passenger, then the tagmail feature built into the core of Puppet should be used.
