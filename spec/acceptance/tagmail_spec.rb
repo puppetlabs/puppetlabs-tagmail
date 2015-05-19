@@ -96,8 +96,6 @@ describe 'tagmail tests', :unless => UNSUPPORTED_PLATFORMS.include?(fact('osfami
     apply_manifest(pp_sendmail, :catch_failures => true)
   end
 
-    
-
   describe 'tagmail' do
     context 'group all tests' do
       it 'applies' do
@@ -149,7 +147,7 @@ describe 'tagmail tests', :unless => UNSUPPORTED_PLATFORMS.include?(fact('osfami
       end
 
       it 'should contain the text' do
-         shell('cat /var/spool/mail/foo || true 2>&1') do |r|
+         shell('sleep 5; cat /var/spool/mail/foo || true 2>&1') do |r|
            expect(r.stdout).to match(/This is a test that should be present for tag1/)
          end
       end
@@ -187,7 +185,7 @@ describe 'tagmail tests', :unless => UNSUPPORTED_PLATFORMS.include?(fact('osfami
       end
 
       it 'should contain the text' do
-         shell('cat /var/spool/mail/foo || true 2>&1') do |r|
+         shell('sleep 5; cat /var/spool/mail/foo || true 2>&1') do |r|
            expect(r.stdout).to match(/This is a test that should be present for tag2/)
          end
       end
@@ -225,7 +223,7 @@ describe 'tagmail tests', :unless => UNSUPPORTED_PLATFORMS.include?(fact('osfami
       end
 
       it 'should contain the text' do
-         shell('cat /var/spool/mail/foo || true 2>&1') do |r|
+         shell('sleep 5; cat /var/spool/mail/foo || true 2>&1') do |r|
            expect(r.stdout).to match(/This is a test that should be present for tag3/)
          end
       end
@@ -263,7 +261,7 @@ describe 'tagmail tests', :unless => UNSUPPORTED_PLATFORMS.include?(fact('osfami
       end
 
       it 'should contain the text' do
-         shell('cat /var/spool/mail/foo || true 2>&1') do |r|
+         shell('sleep 5; cat /var/spool/mail/foo || true 2>&1') do |r|
            expect(r.stdout).to match(/This is a test that should be present for tag3/)
          end
       end
