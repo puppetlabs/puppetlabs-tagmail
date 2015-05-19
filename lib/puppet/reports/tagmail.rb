@@ -123,7 +123,10 @@ Puppet::Reports.register_report(:tagmail) do
   # Send the email reports.
   def send(reports)
     # Run the notification process in a new non-blocking thread
-    Thread.new {
+
+    # Starting a new thread has been commented out as it causes conflict with IO.popen, where the thread just dies
+    # after the first run.
+    #Thread.new {
       if Puppet[:smtpserver] != "none"
         begin
           Net::SMTP.start(Puppet[:smtpserver], Puppet[:smtpport], Puppet[:smtphelo]) do |smtp|
@@ -163,6 +166,6 @@ Puppet::Reports.register_report(:tagmail) do
       else
         raise Puppet::Error, "SMTP server is unset and could not find sendmail"
       end
-    }
+    #}
   end
 end
