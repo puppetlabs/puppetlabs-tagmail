@@ -6,7 +6,7 @@ describe 'tagmail tests', :unless => UNSUPPORTED_PLATFORMS.include?(fact('osfami
     pp = <<-EOS
       ini_setting { "tagmailconf1":
         ensure  => present,
-        path    => '/etc/puppet/puppet.conf',
+        path    => "${::settings::confdir}/puppet.conf",
         section => 'master',
         setting => 'tagmap',
         value   => '$confdir/tagmail.conf',
@@ -14,7 +14,7 @@ describe 'tagmail tests', :unless => UNSUPPORTED_PLATFORMS.include?(fact('osfami
 
       ini_setting { "tagmailconf2":
         ensure  => present,
-        path    => '/etc/puppet/puppet.conf',
+        path    => "${::settings::confdir}/puppet.conf",
         section => 'master',
         setting => 'reports',
         value   => 'puppetdb,console,tagmail',
@@ -22,13 +22,13 @@ describe 'tagmail tests', :unless => UNSUPPORTED_PLATFORMS.include?(fact('osfami
 
       ini_setting { "tagmailconf3":
         ensure  => present,
-        path    => '/etc/puppet/puppet.conf',
+        path    => "${::settings::confdir}/puppet.conf",
         section => 'user',
         setting => 'reports',
         value   => 'tagmail',
       }
 
-      file {'/etc/puppet/tagmail.conf':
+      file {"${::settings::confdir}/tagmail.conf":
         ensure => present,
         content => 'all: foo@localhost,bar@localhost\ntag1: baz@localhost\ntag2, !tag3: qux@localhost\ntag3: fred@localhost',
       }
