@@ -109,7 +109,7 @@ describe 'tagmail tests', :unless => UNSUPPORTED_PLATFORMS.include?(fact('osfami
       end
 
       it 'should contain the text' do
-         shell('sleep 5; cat /var/spool/mail/foo || true 2>&1') do |r|
+         shell('sleep 10; cat /var/spool/mail/foo || true 2>&1') do |r|
            expect(r.stdout).to match(/This is a test that should be present for all/)
          end
       end
