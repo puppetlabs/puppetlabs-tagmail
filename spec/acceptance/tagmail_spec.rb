@@ -30,7 +30,7 @@ describe 'tagmail tests', :unless => UNSUPPORTED_PLATFORMS.include?(fact('osfami
 
       file {"${::settings::confdir}/tagmail.conf":
         ensure => present,
-        content => 'all: foo@localhost,bar@localhost\ntag1: baz@localhost\ntag2, !tag3: qux@localhost\ntag3: fred@localhost',
+        content => '[transport]\nreportfrom=MyPuppetAgent\n\n[tagmap]\nall: foo@localhost,bar@localhost\ntag1: baz@localhost\ntag2, !tag3: qux@localhost\ntag3: fred@localhost',
       }
 
       user {'foo':
@@ -147,7 +147,7 @@ describe 'tagmail tests', :unless => UNSUPPORTED_PLATFORMS.include?(fact('osfami
       end
 
       it 'should contain the text' do
-         shell('sleep 5; cat /var/spool/mail/foo || true 2>&1') do |r|
+         shell('sleep 10; cat /var/spool/mail/foo || true 2>&1') do |r|
            expect(r.stdout).to match(/This is a test that should be present for tag1/)
          end
       end
@@ -185,7 +185,7 @@ describe 'tagmail tests', :unless => UNSUPPORTED_PLATFORMS.include?(fact('osfami
       end
 
       it 'should contain the text' do
-         shell('sleep 5; cat /var/spool/mail/foo || true 2>&1') do |r|
+         shell('sleep 10; cat /var/spool/mail/foo || true 2>&1') do |r|
            expect(r.stdout).to match(/This is a test that should be present for tag2/)
          end
       end
@@ -223,7 +223,7 @@ describe 'tagmail tests', :unless => UNSUPPORTED_PLATFORMS.include?(fact('osfami
       end
 
       it 'should contain the text' do
-         shell('sleep 5; cat /var/spool/mail/foo || true 2>&1') do |r|
+         shell('sleep 10; cat /var/spool/mail/foo || true 2>&1') do |r|
            expect(r.stdout).to match(/This is a test that should be present for tag3/)
          end
       end
@@ -261,7 +261,7 @@ describe 'tagmail tests', :unless => UNSUPPORTED_PLATFORMS.include?(fact('osfami
       end
 
       it 'should contain the text' do
-         shell('sleep 5; cat /var/spool/mail/foo || true 2>&1') do |r|
+         shell('sleep 10; cat /var/spool/mail/foo || true 2>&1') do |r|
            expect(r.stdout).to match(/This is a test that should be present for tag3/)
          end
       end
@@ -283,6 +283,30 @@ describe 'tagmail tests', :unless => UNSUPPORTED_PLATFORMS.include?(fact('osfami
       it 'should contain the text' do
          shell('cat /var/spool/mail/fred || true 2>&1') do |r|
            expect(r.stdout).to match(/This is a test that should be present for tag3/)
+         end
+      end
+    end
+
+    context 'reportfrom test' do
+      it 'applies' do
+        pp = <<-EOS
+          file {"${::settings::confdir}/tagmail.conf":
+            ensure => present,
+            content => '[transport]\nreportfrom=MyCoolPuppetAgent\n\n[tagmap]\nall: foo@localhost,bar@localhost\ntag1: baz@localhost\ntag2, !tag3: qux@localhost\ntag3: fred@localhost',
+          }
+
+          notify {'This is a test that should be present for all':
+            tag => ['undefinedtag'],
+            require => File["${::settings::confdir}/tagmail.conf"]
+          }
+        EOS
+
+        apply_manifest(pp, :catch_failures => true)
+      end
+
+      it 'should contain the reportfrom text' do
+         shell('sleep 10; cat /var/spool/mail/foo || true 2>&1') do |r|
+           expect(r.stdout).to match(/From: MyCoolPuppetAgent/)
          end
       end
     end

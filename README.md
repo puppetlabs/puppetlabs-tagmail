@@ -22,13 +22,7 @@ Tags let you set context for resources, classes, and defines. For example, you c
 
 ## Setup
 
-In `puppet.conf`, make sure `tagmail` is one of the comma-separated values for the `reports` setting, as shown below:
-
-```
-[master]
-tagmap = $confdir/tagmail.conf
-reports = puppetdb,console,tagmail
-```
+In your puppet $confdir, create a tagmail.conf file that will contain the email transport config options, as well as the tags themselves.
 
 On the agent, make sure the [`pluginsync`](https://docs.puppetlabs.com/references/latest/configuration.html#pluginsync) and [`report`](https://docs.puppetlabs.com/references/latest/configuration.html#report) settings are enabled. (These settings are normally enabled by default.)
 
@@ -42,19 +36,29 @@ If you use anti-spam controls such as grey-listing on your mail server, whitelis
 
 ## Usage
 
-To configure the tagmail module, create a file called `tagmail.conf`. The location for this file depends on the `tagmap` option in `puppet.conf`. It defaults to the $confdir directory, and you can check its current value by running `puppet master --configprint tagmap` on the Puppet master.
+To configure the tagmail module, create a file called `tagmail.conf` in your puppet $confdir.
 
-Each line in `tagmail.conf` should include a comma-separated list of tags, a colon, and a comma-separated list of email addresses to receive log messages containing the provided tags.
+`tagmail.conf` is formatted as an ini file and is formatted like so:
+
+~~~
+[transport]
+reportfrom = Puppet Agent
+smptserver = smtp.example.org
+smtpport = 25
+smtphelo = example.org
+
+[tagmap]
+all: me@example.com
+webserver, !mailserver: httpadmins@example.com, you@example.com
+~~~
+
+Instead of specifying `smtpserver`, `smtpport` and `smtphelo`, you can specify the `sendmail` option with a path to your sendmail binary (defaulted to `/usr/sbin/sendmail`). If you do not specify `smtpserver`, tagmail will default to using sendmail.
+
+Each line in the `[tagmap]` section of `tagmail.conf` should include a comma-separated list of tags, a colon, and a comma-separated list of email addresses to receive log messages containing the provided tags.
 
 If you prefix a tag with an exclamation mark, Puppet subtracts any messages with that tag from the line's results.
 
 Puppet's [loglevels](https://docs.puppetlabs.com/references/latest/metaparameter.html#loglevel) (`debug`, `info`, `notice`, `warning`, `err`, `alert`, `emerg`, `crit`, and `verbose`) can also be used as tags, and the `all` tag always matches every log message.
-
-An example `tagmail.conf`:
-~~~
-all: me@example.com
-webserver, !mailserver: httpadmins@example.com, you@example.com
-~~~
 
 The above example sends all log messages to `me@example.com`, and all messages from webservers that are not also from mailservers to `httpadmins@example.com` and to `you@example.com`.
 
