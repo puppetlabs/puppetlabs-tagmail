@@ -17,7 +17,7 @@ The tagmail module is a [report processor](https://docs.puppetlabs.com/guides/re
 
 Tags let you set context for resources, classes, and defines. For example, you can assign a tag to all resources associated with a particular operating system, location, or other characteristic. The tag is then included in all log messages related to those resources. [Read more about tags.](http://docs.puppetlabs.com/puppet/latest/reference/lang_tags.html)
 
-> Note that you must upgrade to tagmail 2.0 if you are using Puppet 4.0 or Puppet Enterprise 2015.2. Version 1.x of the tagmail module supports only Puppet 3.7 to 3.8 and PE 3.7 to 3.8.1. For older versions of Puppet, use Puppet's built-in tagmail feature.
+> Note that version 1.x of the tagmail module supports only Puppet 3.7 to 3.8 and PE 3.7 to 3.8.1. For newer versions of Puppet or PE, you must upgrade to tagmail 2.0. For older versions of Puppet, use Puppet's built-in tagmail feature.
 
 
 ## Setup
