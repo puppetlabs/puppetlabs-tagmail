@@ -14,14 +14,14 @@ describe tagmail do
   passers = my_fixture "tagmail_passers.conf"
   File.readlines(passers).each do |line|
     it "should be able to parse '#{line.inspect}'" do
-      @processor.parse(line)
+      @processor.parse_tagmap(line)
     end
   end
 
   failers = my_fixture "tagmail_failers.conf"
   File.readlines(failers).each do |line|
     it "should not be able to parse '#{line.inspect}'" do
-      lambda { @processor.parse(line) }.should raise_error(ArgumentError)
+      lambda { @processor.parse_tagmap(line) }.should raise_error(ArgumentError)
     end
   end
 
@@ -36,7 +36,7 @@ describe tagmail do
 
   }.each do |line, results|
     it "should parse '#{line}' as #{results.inspect}" do
-      @processor.parse(line).shift.should == results
+      @processor.parse_tagmap(line).shift.should == results
     end
   end
 
@@ -90,10 +90,6 @@ describe tagmail do
   end
 
   describe "the behavior of tagmail.process" do
-    before do
-      Puppet[:tagmap] = my_fixture "tagmail_email.conf"
-    end
-
     let(:processor) do
       processor = Puppet::Transaction::Report.new("apply")
       processor.extend(Puppet::Reports.report(:tagmail))
@@ -120,7 +116,7 @@ describe tagmail do
           "resources" => { "changed" => 1, "out_of_sync" => 0 }
         })
 
-        processor.process
+        processor.process(my_fixture "tagmail_email.conf")
       end
 
       it "should send email if there are resources out of sync" do
@@ -129,7 +125,7 @@ describe tagmail do
           "resources" => { "changed" => 0, "out_of_sync" => 1 }
         })
 
-        processor.process
+        processor.process(my_fixture "tagmail_email.conf")
       end
 
       it "should not send email if no changes or resources out of sync" do
@@ -138,7 +134,7 @@ describe tagmail do
           "resources" => { "changed" => 0, "out_of_sync" => 0 }
         })
 
-        processor.process
+        processor.process(my_fixture "tagmail_email.conf")
       end
 
       it "should log a message if no changes or resources out of sync" do
@@ -148,19 +144,19 @@ describe tagmail do
         })
 
         Puppet.expects(:notice).with("Not sending tagmail report; no changes")
-        processor.process
+        processor.process(my_fixture "tagmail_email.conf")
       end
 
       it "should send email if raw_summary is not defined" do
         processor.expects(:send).with([[['user@domain.com'], message]])
         processor.expects(:raw_summary).returns(nil)
-        processor.process
+        processor.process(my_fixture "tagmail_email.conf")
       end
 
       it "should send email if there are no resource metrics" do
         processor.expects(:send).with([[['user@domain.com'], message]])
         processor.expects(:raw_summary).returns({'resources' => nil})
-        processor.process
+        processor.process(my_fixture "tagmail_email.conf")
       end
     end
 
@@ -182,7 +178,7 @@ describe tagmail do
         processor.expects(:raw_summary).returns({
           "resources" => { "changed" => 1, "out_of_sync" => 0 }
         })
-        processor.process
+        processor.process(my_fixture "tagmail_email.conf")
       end
 
       it "should send no email if there are resources out of sync" do
@@ -190,7 +186,7 @@ describe tagmail do
         processor.expects(:raw_summary).returns({
           "resources" => { "changed" => 0, "out_of_sync" => 1 }
         })
-        processor.process
+        processor.process(my_fixture "tagmail_email.conf")
       end
 
       it "should send no email if no changes or resources out of sync" do
@@ -198,19 +194,19 @@ describe tagmail do
         processor.expects(:raw_summary).returns({
           "resources" => { "changed" => 0, "out_of_sync" => 0 }
         })
-        processor.process
+        processor.process(my_fixture "tagmail_email.conf")
       end
 
       it "should send no email if raw_summary is not defined" do
         processor.expects(:send).never
         processor.expects(:raw_summary).returns(nil)
-        processor.process
+        processor.process(my_fixture "tagmail_email.conf")
       end
 
       it "should send no email if there are no resource metrics" do
         processor.expects(:send).never
         processor.expects(:raw_summary).returns({'resources' => nil})
-        processor.process
+        processor.process(my_fixture "tagmail_email.conf")
       end
     end
   end

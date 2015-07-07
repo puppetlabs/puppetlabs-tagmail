@@ -82,7 +82,9 @@ Puppet::Reports.register_report(:tagmail) do
         section = value.gsub('[','').gsub(']','')
         file_hash[section.to_sym] = []
       elsif value.strip.length > 0
-        if section and not section == ''
+        if value =~ /^\s*#/
+          # do nothing as this is a comment
+        elsif section and not section == ''
           file_hash[section.to_sym] << value
         else
           raise Puppet::Error, "Malformed tagmail.conf file"
@@ -169,9 +171,9 @@ Puppet::Reports.register_report(:tagmail) do
   end
 
   # Process the report.  This just calls the other associated messages.
-  def process
-    unless Puppet::FileSystem.exist?("#{Puppet[:confdir]}/tagmail.conf")
-      Puppet.notice "Cannot send tagmail report; no tagmap file #{Puppet[:confdir]}/tagmail.conf"
+  def process(tagmail_conf_file = "#{Puppet[:confdir]}/tagmail.conf")
+    unless Puppet::FileSystem.exist?(tagmail_conf_file)
+      Puppet.notice "Cannot send tagmail report; no tagmap file #{tagmail_conf_file}"
       return
     end
 
@@ -182,7 +184,7 @@ Puppet::Reports.register_report(:tagmail) do
       return
     end
 
-    taglists = parse(File.read("#{Puppet[:confdir]}/tagmail.conf"))
+    taglists = parse(File.read(tagmail_conf_file))
 
     # Now find any appropriately tagged messages.
     reports = match(taglists)
