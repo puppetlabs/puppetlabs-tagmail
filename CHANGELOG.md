@@ -1,3 +1,8 @@
+##2015-07-07 - Supported Release 2.0.0
+###Summary
+
+This is a major release that changes the tagmail.conf configuration file format. As such, this is backwards incompatible with 1.0.0.
+
 ##2015-06-02 - Supported Release 1.0.0
 ###Summary
 
