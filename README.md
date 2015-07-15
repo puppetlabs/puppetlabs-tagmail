@@ -46,7 +46,7 @@ To configure the tagmail module, edit (or create and edit) the `tagmail.conf` in
 ~~~
 [transport]
 reportfrom = reports@example.org
-smptserver = smtp.example.org
+smtpserver = smtp.example.org
 smtpport = 25
 smtphelo = example.org
 
