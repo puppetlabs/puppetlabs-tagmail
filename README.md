@@ -27,15 +27,20 @@ This module supports Puppet Enterprise and Puppet versions 3.8 or newer. For old
 
 ###Beginning with tagmail
 
-1. On the agent, make sure the [`pluginsync`](https://docs.puppetlabs.com/references/latest/configuration.html#pluginsync) and [`report`](https://docs.puppetlabs.com/references/latest/configuration.html#report) settings are enabled. (These settings are normally enabled by default.)
+1. On each Puppet agent, make sure the [`pluginsync`](https://docs.puppetlabs.com/references/latest/configuration.html#pluginsync) and [`report`](https://docs.puppetlabs.com/references/latest/configuration.html#report) settings are enabled. (These settings are normally enabled by default.)
 
         [agent]
         report = true
         pluginsync = true
 
-2. If you use anti-spam controls such as greylisting on your mail server, be sure to whitelist Puppet's sending email address to ensure your tagmail reports are not discarded as spam.
+2. On the Puppet master, make sure the [`reports`](https://docs.puppetlabs.com/references/4.2.latest/configuration.html#reports) setting in the master section includes tagmail:
 
-3. In your Puppet confdir, create a tagmail.conf file. This file will contain your email transport config options, as well as the tags themselves.
+        [master]
+        reports = tagmail
+
+3. If you use anti-spam controls such as greylisting on your mail server, be sure to whitelist Puppet's sending email address to ensure your tagmail reports are not discarded as spam.
+
+4. In your Puppet confdir on your master, create a tagmail.conf file. This file will contain your email transport config options, as well as the tags themselves.
 
 ## Usage
 
