@@ -1,3 +1,8 @@
+##2015-07-28 - Supported Release 2.1.0
+###Summary
+
+This release includes formal support for Puppet 4.x and Puppet Enterprise 2015.2.x. Additionally, some README improvements have been made.
+
 ##2015-07-07 - Supported Release 2.0.0
 ###Summary
 
