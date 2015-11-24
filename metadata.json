@@ -1,6 +1,6 @@
 {
   "name": "puppetlabs-tagmail",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "author": "puppetlabs",
   "summary": "This module provides a report processor that sends events to email addresses based on tagging of resources",
   "license": "Apache-2.0",
@@ -59,7 +59,7 @@
   "requirements": [
     {
       "name": "pe",
-      "version_requirement": ">= 3.7.0 < 2015.3.0"
+      "version_requirement": ">= 3.7.0 < 2015.4.0"
     },
     {
       "name": "puppet",
