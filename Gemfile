@@ -1,4 +1,4 @@
-source ENV['GEM_SOURCE'] || 'https://rubygems.org'
+source ENV['GEM_SOURCE'] || "https://rubygems.org"
 
 def location_for(place, fake_version = nil)
   if place =~ /^(git[:@][^#]*)#(.*)/
@@ -11,25 +11,36 @@ def location_for(place, fake_version = nil)
 end
 
 group :development, :unit_tests do
-  gem 'rake', '~> 10.1.0',       :require => false
-  gem 'rspec-puppet',            :require => false
-  gem 'puppetlabs_spec_helper',  :require => false
-  gem 'puppet-lint',             :require => false
-  gem 'pry',                     :require => false
-  gem 'simplecov',               :require => false
-  gem 'rspec'
+  gem 'json',                      :require => false
+  gem 'metadata-json-lint',        :require => false
+  gem 'puppet_facts',              :require => false
+  gem 'puppet-blacksmith',         :require => false
+  gem 'puppetlabs_spec_helper',    :require => false
+  gem 'rspec-puppet', '>= 2.3.2',  :require => false
+  gem 'simplecov',                 :require => false
 end
-
 group :system_tests do
-  gem 'beaker-rspec',                 :require => false
-  gem 'serverspec',                   :require => false
-  gem 'beaker-puppet_install_helper', :require => false
+  gem 'beaker-puppet_install_helper',  :require => false
+  if beaker_version = ENV['BEAKER_VERSION']
+    gem 'beaker', *location_for(beaker_version)
+  end
+  if beaker_rspec_version = ENV['BEAKER_RSPEC_VERSION']
+    gem 'beaker-rspec', *location_for(beaker_rspec_version)
+  else
+    gem 'beaker-rspec',  :require => false
+  end
+  gem 'master_manipulator',            :require => false
+  gem 'serverspec',                    :require => false
 end
 
-ENV['GEM_PUPPET_VERSION'] ||= ENV['PUPPET_GEM_VERSION']
-puppetversion = ENV['GEM_PUPPET_VERSION']
-if puppetversion
-  gem 'puppet', *location_for(puppetversion)
+if facterversion = ENV['FACTER_GEM_VERSION']
+  gem 'facter', facterversion, :require => false
+else
+  gem 'facter', :require => false
+end
+
+if puppetversion = ENV['PUPPET_GEM_VERSION']
+  gem 'puppet', puppetversion, :require => false
 else
   gem 'puppet', :require => false
 end
