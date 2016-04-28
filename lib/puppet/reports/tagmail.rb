@@ -176,18 +176,18 @@ Puppet::Reports.register_report(:tagmail) do
       Puppet.notice "Cannot send tagmail report; no tagmap file #{tagmail_conf_file}"
       return
     end
-
-    metrics = raw_summary['resources'] || {} rescue {}
-
-    if metrics['out_of_sync'] == 0 && metrics['changed'] == 0
-      Puppet.notice "Not sending tagmail report; no changes"
-      return
-    end
-
+    
     taglists = parse(File.read(tagmail_conf_file))
 
     # Now find any appropriately tagged messages.
     reports = match(taglists)
+
+    metrics = raw_summary['resources'] || {} rescue {}
+
+    if metrics['out_of_sync'] == 0 && metrics['changed'] == 0 && reports.nil?
+      Puppet.notice "Not sending tagmail report; no changes or messages"
+      return
+    end
 
     send(reports) unless reports.empty?
   end
