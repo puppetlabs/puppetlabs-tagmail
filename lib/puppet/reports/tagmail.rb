@@ -177,9 +177,11 @@ Puppet::Reports.register_report(:tagmail) do
       return
     end
 
-    metrics = raw_summary['resources'] || {} rescue {}
+    metrics = raw_summary || {} rescue {}
+    metrics['resources'] = metrics['resources'] || {} rescue {}
+    metrics['events'] = metrics['events'] || {} rescue {}
 
-    if metrics['out_of_sync'] == 0 && metrics['changed'] == 0
+    if metrics['resources']['out_of_sync'] == 0 && metrics['resources']['changed'] == 0 && metrics['events']['audit'] == nil
       Puppet.notice "Not sending tagmail report; no changes"
       return
     end
