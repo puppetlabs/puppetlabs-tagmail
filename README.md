@@ -4,8 +4,8 @@
 
 1. [Module description - What the module does and why it is useful](#description)
 2. [Setup - The basics of getting started with tagmail](#setup)
-  * [Requirements](#requirements)
-  * [Beginning with tagmail](#beginning-with-tagmail)
+   * [Requirements](#requirements)
+   * [Beginning with tagmail](#beginning-with-tagmail)
 3. [Usage - Configuration options and additional functionality](#usage)
 4. [Limitations - OS compatibility, etc.](#limitations)
 5. [Development - Guide for contributing to the module](#development)
@@ -27,7 +27,7 @@ This module supports Puppet Enterprise and Puppet versions 3.8 or newer. For old
 
 ### Beginning with tagmail
 
-1. On each Puppet agent, make sure the [`pluginsync`](https://docs.puppet.com/latest/configuration.html#pluginsync) and [`report`](https://docs.puppet.com/latest/configuration.html#report) settings are enabled. (These settings are normally enabled by default.)
+1. On each Puppet agent, make sure the [`pluginsync`](https://docs.puppet.com/puppet/latest/configuration.html#pluginsync) and [`report`](https://docs.puppet.com/puppet/latest/configuration.html#report) settings are enabled. (These settings are normally enabled by default.)
 
   ```
 [agent]
@@ -35,7 +35,7 @@ report = true
 pluginsync = true
   ```
 
-2. On the Puppet master, include tagmail in the [`reports`](https://docs.puppetlabs.com/references/4.2.latest/configuration.html#reports) setting in the master section:
+2. On the Puppet master, include tagmail in the [`reports`](https://docs.puppetlabs.com/references/latest/configuration.html#reports) setting in the master section:
 
   ```
 [master]
@@ -53,7 +53,7 @@ reports = puppetdb,console,tagmail
 
 Tags let you set context for resources, classes, and defined types. For example, you can assign a tag to all resources associated with a particular operating system, location, or other characteristic. The tag is then included in all log messages related to those resources.
 
-Puppet's [loglevels](https://docs.puppet.com/latest/metaparameter.html#loglevel) (`debug`, `info`, `notice`, `warning`, `err`, `alert`, `emerg`, `crit`, and `verbose`) can also be used as tags, and the `all` tag always matches every log message. To learn more about tags, see [tags](http://docs.puppetlabs.com/puppet/latest/reference/lang_tags.html) in the Puppet Language docs.
+Puppet's [loglevels](https://docs.puppet.com/puppet/latest/metaparameter.html#loglevel) (`debug`, `info`, `notice`, `warning`, `err`, `alert`, `emerg`, `crit`, and `verbose`) can also be used as tags, and the `all` tag always matches every log message. To learn more about tags, see [tags](http://docs.puppetlabs.com/puppet/latest/reference/lang_tags.html) in the Puppet Language docs.
 
 ### Configure `tagmail.conf`
 
