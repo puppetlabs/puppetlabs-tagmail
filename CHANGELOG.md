@@ -1,3 +1,14 @@
+## Supported Release 2.2.0
+###Summary
+
+This release adds a new feature and support for internationalization. It also contains Japanese translations for the README, summary and description of the metadata.json and major cleanups in the README. Additional folders have been introduced called locales and readmes where translation files can be found. A number of features and bug fixes are also included in this release.
+
+#### Features
+- Addition of POT file / folder structure for i18n.
+- Addition of Internationalized READMEs.
+- Multiple changes through modulesync, this should not affect the behaviour of the module.
+- Update for audit email alerts
+
 ## Supported Release 2.1.1
 ###Summary
 
