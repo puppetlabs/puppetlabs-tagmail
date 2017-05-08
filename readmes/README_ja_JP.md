@@ -4,8 +4,8 @@
 
 1. [モジュールの説明 - モジュールの機能とその有益性](#説明)
 2. [セットアップ - タグメール導入の基本](#セットアップ)
-  * [要件](#要件)
-  * [タグメールの使用を始める](#タグメールの使用を始める)
+   * [要件](#要件)
+   * [タグメールの使用を始める](#タグメールの使用を始める)
 3. [使用 - 設定オプションと追加機能](#使用)
 4. [制約 - OS互換性など](#制約)
 5. [開発 - モジュール貢献についてのガイド](#開発)
@@ -27,7 +27,7 @@
 
 ### タグメールの使用を始める
 
-1. 各Puppet agent上で、[`pluginsync`](https://docs.puppet.com/latest/configuration.html#pluginsync)および[`report`](https://docs.puppet.com/latest/configuration.html#report)設定が有効になっていることを確認します(これらの設定は通常、デフォルトで有効になっています)。
+1. 各Puppet agent上で、[`pluginsync`](https://docs.puppet.com/puppet/latest/configuration.html#pluginsync)および[`report`](https://docs.puppet.com/puppet/latest/configuration.html#report)設定が有効になっていることを確認します(これらの設定は通常、デフォルトで有効になっています)。
 
   ```
 [agent]
@@ -35,7 +35,7 @@ report = true
 pluginsync = true
   ```
 
-2. Puppet master上で、master画面の[`reports`](https://docs.puppetlabs.com/references/4.2.latest/configuration.html#reports)設定にタグメールを含めます。
+2. Puppet master上で、master画面の[`reports`](https://docs.puppetlabs.com/references/latest/configuration.html#reports)設定にタグメールを含めます。
 
   ```
 [master]
@@ -53,7 +53,7 @@ reports = puppetdb,console,tagmail
 
 タグを使えば、リソース、クラス、定義タイプのコンテキストを設定できます。たとえば、特定のオペレーティングシステムやロケーションなどの特性に関連するすべてのリソースに、1つのタグを割り当てることができます。これにより、そのタグが、当該リソースに関連するすべてのログメッセージに含まれます。
 
-Puppetの[ログレベル](https://docs.puppet.com/latest/metaparameter.html#loglevel) (`debug`、`info`、`notice`、`warning`、`err`、`alert`、`emerg`、`crit`、`verbose`)も、タグとして使うことが可能です。`all`タグは、常にすべてのログメッセージにマッチします。タグの詳細については、Puppet Languageドキュメントの[タグ](http://docs.puppetlabs.com/puppet/latest/reference/lang_tags.html)を参照してください。
+Puppetの[ログレベル](https://docs.puppet.com/puppet/latest/metaparameter.html#loglevel) (`debug`, `info`, `notice`, `warning`, `err`, `alert`, `emerg`, `crit`, `verbose`)も、タグとして使うことが可能です。`all`タグは、常にすべてのログメッセージにマッチします。タグの詳細については、Puppet Languageドキュメントの[タグ](http://docs.puppetlabs.com/puppet/latest/reference/lang_tags.html)を参照してください。
 
 ### `tagmail.conf`の設定
 
