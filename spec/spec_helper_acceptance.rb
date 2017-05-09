@@ -17,7 +17,7 @@ RSpec.configure do |c|
   c.before :suite do
     # Install test dependencies
     hosts.each do |host|
-      on host, puppet('module install puppetlabs-inifile'), { :acceptable_exit_codes => [0,1] }
+      on host, puppet('module install puppetlabs-inifile')
     end
   end
 end
