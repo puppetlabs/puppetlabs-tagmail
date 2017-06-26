@@ -61,7 +61,7 @@
   "requirements": [
     {
       "name": "puppet",
-      "version_requirement": ">= 4.7.0 < 5.0.0"
+      "version_requirement": ">= 4.7.0 < 6.0.0"
     }
   ],
   "description": "This module provides a report processor that sends events to email addresses based on tagging of resources",
