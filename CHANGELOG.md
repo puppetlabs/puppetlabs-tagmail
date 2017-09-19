@@ -1,3 +1,21 @@
+##2017-09-19 Supported Release 2.2.1
+### Summary
+This release is a roll up of changes. The bulk of the changes being module compatibiliity.
+
+### Changed
+- Acceptable exit code for module install is 0 only
+- Updated puppet version compatibility from 3.7 to 4.7
+- Updated puppet boundary from 5.0.0 to 6.0.0
+- Changing travis to test on puppet 5 and ruby 2.4
+- Updates to readmes/README_ja_JP.md
+- Updates to the contributing documentation
+- `./lib/**/*.rb` has been added to the locales config
+
+### Removed
+- Support for EOL platform Debian 6 (Squeeze)
+- Support for EOL for Ubuntu 10.04
+- Support for EOL for Ubuntu 12.04
+
 ## Supported Release 2.2.0
 ###Summary
 
