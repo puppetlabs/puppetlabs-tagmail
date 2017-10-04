@@ -1,7 +1,6 @@
 require 'spec_helper_acceptance'
 
-describe 'tagmail tests', :unless => UNSUPPORTED_PLATFORMS.include?(fact('osfamily')) do
-
+describe 'tagmail tests', unless: UNSUPPORTED_PLATFORMS.include?(fact('osfamily')) do
   before(:all) do
     pp = <<-EOS
       ini_setting { "tagmailconf1":
@@ -54,7 +53,7 @@ describe 'tagmail tests', :unless => UNSUPPORTED_PLATFORMS.include?(fact('osfami
       }
       EOS
 
-    apply_manifest(pp, :catch_failures => true)
+    apply_manifest(pp, catch_failures: true)
 
     pp_sendmail = <<-EOS
         if $::operatingsystem == 'Debian' {
@@ -90,206 +89,200 @@ describe 'tagmail tests', :unless => UNSUPPORTED_PLATFORMS.include?(fact('osfami
           ensure => running,
           require => Package['sendmail'],
         }
-        
+
       EOS
 
-    apply_manifest(pp_sendmail, :catch_failures => true)
+    apply_manifest(pp_sendmail, catch_failures: true)
   end
 
   describe 'tagmail' do
     context 'group all tests' do
-      it 'applies' do
-        pp = <<-EOS
+      pp = <<-EOS
           notify {'This is a test that should be present for all':
             tag => ['undefinedtag'],
           }
-        EOS
-
-        apply_manifest(pp, :catch_failures => true)
+      EOS
+      it 'applies' do
+        apply_manifest(pp, catch_failures: true)
       end
 
-      it 'should contain the text' do
-         shell('sleep 10; cat /var/spool/mail/foo || true 2>&1') do |r|
-           expect(r.stdout).to match(/This is a test that should be present for all/)
-         end
+      it 'contains the text - foo' do
+        shell('sleep 10; cat /var/spool/mail/foo || true 2>&1') do |r|
+          expect(r.stdout).to match(%r{This is a test that should be present for all})
+        end
       end
-      it 'should contain the text' do
-         shell('cat /var/spool/mail/bar || true 2>&1') do |r|
-           expect(r.stdout).to match(/This is a test that should be present for all/)
-         end
+      it 'contains the text - bar' do
+        shell('cat /var/spool/mail/bar || true 2>&1') do |r|
+          expect(r.stdout).to match(%r{This is a test that should be present for all})
+        end
       end
-      it 'should not contain the text' do
-         shell('cat /var/spool/mail/baz || true 2>&1') do |r|
-           expect(r.stdout).to_not match(/This is a test that should be present for all/)
-         end
+      it 'does not contain the text - baz' do
+        shell('cat /var/spool/mail/baz || true 2>&1') do |r|
+          expect(r.stdout).not_to match(%r{This is a test that should be present for all})
+        end
       end
-      it 'should not contain the text' do
-         shell('cat /var/spool/mail/qux || true 2>&1') do |r|
-           expect(r.stdout).to_not match(/This is a test that should be present for all/)
-         end
+      it 'does not contain the text - qux' do
+        shell('cat /var/spool/mail/qux || true 2>&1') do |r|
+          expect(r.stdout).not_to match(%r{This is a test that should be present for all})
+        end
       end
-      it 'should not contain the text' do
-         shell('cat /var/spool/mail/fred || true 2>&1') do |r|
-           expect(r.stdout).to_not match(/This is a test that should be present for all/)
-         end
+      it 'does not contain the text - fred' do
+        shell('cat /var/spool/mail/fred || true 2>&1') do |r|
+          expect(r.stdout).not_to match(%r{This is a test that should be present for all})
+        end
       end
     end
 
     context 'group tag1 tests' do
-      it 'applies' do
-        pp = <<-EOS
+      pp = <<-EOS
           notify {'This is a test that should be present for tag1':
             tag => ['tag1'],
           }
-        EOS
-
-        apply_manifest(pp, :catch_failures => true)
+      EOS
+      it 'applies' do
+        apply_manifest(pp, catch_failures: true)
       end
 
-      it 'should contain the text' do
-         shell('sleep 10; cat /var/spool/mail/foo || true 2>&1') do |r|
-           expect(r.stdout).to match(/This is a test that should be present for tag1/)
-         end
+      it 'contains the text - foo' do
+        shell('sleep 10; cat /var/spool/mail/foo || true 2>&1') do |r|
+          expect(r.stdout).to match(%r{This is a test that should be present for tag1})
+        end
       end
-      it 'should contain the text' do
-         shell('cat /var/spool/mail/bar || true 2>&1') do |r|
-           expect(r.stdout).to match(/This is a test that should be present for tag1/)
-         end
+      it 'contains the text - bar' do
+        shell('cat /var/spool/mail/bar || true 2>&1') do |r|
+          expect(r.stdout).to match(%r{This is a test that should be present for tag1})
+        end
       end
-      it 'should contain the text' do
-         shell('cat /var/spool/mail/baz || true 2>&1') do |r|
-           expect(r.stdout).to match(/This is a test that should be present for tag1/)
-         end
+      it 'contains the text - baz' do
+        shell('cat /var/spool/mail/baz || true 2>&1') do |r|
+          expect(r.stdout).to match(%r{This is a test that should be present for tag1})
+        end
       end
-      it 'should not contain the text' do
-         shell('cat /var/spool/mail/qux || true 2>&1') do |r|
-           expect(r.stdout).to_not match(/This is a test that should be present for tag1/)
-         end
+      it 'does not contain the text - quz' do
+        shell('cat /var/spool/mail/qux || true 2>&1') do |r|
+          expect(r.stdout).not_to match(%r{This is a test that should be present for tag1})
+        end
       end
-      it 'should not contain the text' do
-         shell('cat /var/spool/mail/fred || true 2>&1') do |r|
-           expect(r.stdout).to_not match(/This is a test that should be present for tag1/)
-         end
+      it 'does not contain the text - fred' do
+        shell('cat /var/spool/mail/fred || true 2>&1') do |r|
+          expect(r.stdout).not_to match(%r{This is a test that should be present for tag1})
+        end
       end
     end
 
     context 'group tag2 tests' do
-      it 'applies' do
-        pp = <<-EOS
+      pp = <<-EOS
           notify {'This is a test that should be present for tag2':
             tag => ['tag2'],
           }
-        EOS
-
-        apply_manifest(pp, :catch_failures => true)
+      EOS
+      it 'applies' do
+        apply_manifest(pp, catch_failures: true)
       end
 
-      it 'should contain the text' do
-         shell('sleep 10; cat /var/spool/mail/foo || true 2>&1') do |r|
-           expect(r.stdout).to match(/This is a test that should be present for tag2/)
-         end
+      it 'contains the text - foo' do
+        shell('sleep 10; cat /var/spool/mail/foo || true 2>&1') do |r|
+          expect(r.stdout).to match(%r{This is a test that should be present for tag2})
+        end
       end
-      it 'should contain the text' do
-         shell('cat /var/spool/mail/bar || true 2>&1') do |r|
-           expect(r.stdout).to match(/This is a test that should be present for tag2/)
-         end
+      it 'contains the text - bar' do
+        shell('cat /var/spool/mail/bar || true 2>&1') do |r|
+          expect(r.stdout).to match(%r{This is a test that should be present for tag2})
+        end
       end
-      it 'should not contain the text' do
-         shell('cat /var/spool/mail/baz || true 2>&1') do |r|
-           expect(r.stdout).to_not match(/This is a test that should be present for tag2/)
-         end
+      it 'does not contain the text - baz' do
+        shell('cat /var/spool/mail/baz || true 2>&1') do |r|
+          expect(r.stdout).not_to match(%r{This is a test that should be present for tag2})
+        end
       end
-      it 'should contain the text' do
-         shell('cat /var/spool/mail/qux || true 2>&1') do |r|
-           expect(r.stdout).to match(/This is a test that should be present for tag2/)
-         end
+      it 'contains the text - quz' do
+        shell('cat /var/spool/mail/qux || true 2>&1') do |r|
+          expect(r.stdout).to match(%r{This is a test that should be present for tag2})
+        end
       end
-      it 'should not contain the text' do
-         shell('cat /var/spool/mail/fred || true 2>&1') do |r|
-           expect(r.stdout).to_not match(/This is a test that should be present for tag2/)
-         end
+      it 'does not contain the text - fred' do
+        shell('cat /var/spool/mail/fred || true 2>&1') do |r|
+          expect(r.stdout).not_to match(%r{This is a test that should be present for tag2})
+        end
       end
     end
 
     context 'group tag3 tests' do
-      it 'applies' do
-        pp = <<-EOS
+      pp = <<-EOS
           notify {'This is a test that should be present for tag3':
             tag => ['tag3'],
           }
-        EOS
-
-        apply_manifest(pp, :catch_failures => true)
+      EOS
+      it 'applies' do
+        apply_manifest(pp, catch_failures: true)
       end
 
-      it 'should contain the text' do
-         shell('sleep 10; cat /var/spool/mail/foo || true 2>&1') do |r|
-           expect(r.stdout).to match(/This is a test that should be present for tag3/)
-         end
+      it 'contains the text - foo' do
+        shell('sleep 10; cat /var/spool/mail/foo || true 2>&1') do |r|
+          expect(r.stdout).to match(%r{This is a test that should be present for tag3})
+        end
       end
-      it 'should contain the text' do
-         shell('cat /var/spool/mail/bar || true 2>&1') do |r|
-           expect(r.stdout).to match(/This is a test that should be present for tag3/)
-         end
+      it 'contains the text - bar' do
+        shell('cat /var/spool/mail/bar || true 2>&1') do |r|
+          expect(r.stdout).to match(%r{This is a test that should be present for tag3})
+        end
       end
-      it 'should not contain the text' do
-         shell('cat /var/spool/mail/baz || true 2>&1') do |r|
-           expect(r.stdout).to_not match(/This is a test that should be present for tag3/)
-         end
+      it 'does not contain the text - baz' do
+        shell('cat /var/spool/mail/baz || true 2>&1') do |r|
+          expect(r.stdout).not_to match(%r{This is a test that should be present for tag3})
+        end
       end
-      it 'should not contain the text' do
-         shell('cat /var/spool/mail/qux || true 2>&1') do |r|
-           expect(r.stdout).to_not match(/This is a test that should be present for tag3/)
-         end
+      it 'does not contain the text - quz' do
+        shell('cat /var/spool/mail/qux || true 2>&1') do |r|
+          expect(r.stdout).not_to match(%r{This is a test that should be present for tag3})
+        end
       end
-      it 'should contain the text' do
-         shell('cat /var/spool/mail/fred || true 2>&1') do |r|
-           expect(r.stdout).to match(/This is a test that should be present for tag3/)
-         end
+      it 'contains the text - fred' do
+        shell('cat /var/spool/mail/fred || true 2>&1') do |r|
+          expect(r.stdout).to match(%r{This is a test that should be present for tag3})
+        end
       end
     end
 
     context 'group tag2 and tag3 tests' do
-      it 'applies' do
-        pp = <<-EOS
+      pp = <<-EOS
           notify {'This is a test that should be present for tag3':
             tag => ['tag2', 'tag3'],
           }
-        EOS
-
-        apply_manifest(pp, :catch_failures => true)
+      EOS
+      it 'applies' do
+        apply_manifest(pp, catch_failures: true)
       end
 
-      it 'should contain the text' do
-         shell('sleep 10; cat /var/spool/mail/foo || true 2>&1') do |r|
-           expect(r.stdout).to match(/This is a test that should be present for tag3/)
-         end
+      it 'contains the text - foo' do
+        shell('sleep 10; cat /var/spool/mail/foo || true 2>&1') do |r|
+          expect(r.stdout).to match(%r{This is a test that should be present for tag3})
+        end
       end
-      it 'should contain the text' do
-         shell('cat /var/spool/mail/bar || true 2>&1') do |r|
-           expect(r.stdout).to match(/This is a test that should be present for tag3/)
-         end
+      it 'contains the text - bar' do
+        shell('cat /var/spool/mail/bar || true 2>&1') do |r|
+          expect(r.stdout).to match(%r{This is a test that should be present for tag3})
+        end
       end
-      it 'should not contain the text' do
-         shell('cat /var/spool/mail/baz || true 2>&1') do |r|
-           expect(r.stdout).to_not match(/This is a test that should be present for tag3/)
-         end
+      it 'does not contain the text - baz' do
+        shell('cat /var/spool/mail/baz || true 2>&1') do |r|
+          expect(r.stdout).not_to match(%r{This is a test that should be present for tag3})
+        end
       end
-      it 'should not contain the text' do
-         shell('cat /var/spool/mail/qux || true 2>&1') do |r|
-           expect(r.stdout).to_not match(/This is a test that should be present for tag3/)
-         end
+      it 'does not contain the text - quz' do
+        shell('cat /var/spool/mail/qux || true 2>&1') do |r|
+          expect(r.stdout).not_to match(%r{This is a test that should be present for tag3})
+        end
       end
-      it 'should contain the text' do
-         shell('cat /var/spool/mail/fred || true 2>&1') do |r|
-           expect(r.stdout).to match(/This is a test that should be present for tag3/)
-         end
+      it 'contains the text - fred' do
+        shell('cat /var/spool/mail/fred || true 2>&1') do |r|
+          expect(r.stdout).to match(%r{This is a test that should be present for tag3})
+        end
       end
     end
 
     context 'reportfrom test' do
-      it 'applies' do
-        pp = <<-EOS
+      pp = <<-EOS
           file {"${::settings::confdir}/tagmail.conf":
             ensure => present,
             content => '[transport]\nreportfrom=MyCoolPuppetAgent\n\n[tagmap]\nall: foo@localhost,bar@localhost\ntag1: baz@localhost\ntag2, !tag3: qux@localhost\ntag3: fred@localhost',
@@ -299,15 +292,15 @@ describe 'tagmail tests', :unless => UNSUPPORTED_PLATFORMS.include?(fact('osfami
             tag => ['undefinedtag'],
             require => File["${::settings::confdir}/tagmail.conf"]
           }
-        EOS
-
-        apply_manifest(pp, :catch_failures => true)
+      EOS
+      it 'applies' do
+        apply_manifest(pp, catch_failures: true)
       end
 
-      it 'should contain the reportfrom text' do
-         shell('sleep 10; cat /var/spool/mail/foo || true 2>&1') do |r|
-           expect(r.stdout).to match(/From: MyCoolPuppetAgent/)
-         end
+      it 'contains the reportfrom text - foo' do
+        shell('sleep 10; cat /var/spool/mail/foo || true 2>&1') do |r|
+          expect(r.stdout).to match(%r{From: MyCoolPuppetAgent})
+        end
       end
     end
   end

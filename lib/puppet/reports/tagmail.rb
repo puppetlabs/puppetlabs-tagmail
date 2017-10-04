@@ -5,7 +5,6 @@ require 'net/smtp'
 require 'time'
 
 Puppet::Reports.register_report(:tagmail) do
-
   @tagmail_conf = {}
 
   desc "This report sends specific log messages to specific email addresses
@@ -42,34 +41,33 @@ Puppet::Reports.register_report(:tagmail) do
     matching_logs = []
     taglists.each do |emails, pos, neg|
       # First find all of the messages matched by our positive tags
-      messages = nil
-      if pos.include?("all")
-        messages = self.logs
-      else
-        # Find all of the messages that are tagged with any of our
-        # tags.
-        messages = self.logs.find_all do |log|
-          pos.detect { |tag| log.tagged?(tag) }
-        end
-      end
+      messages = if pos.include?('all')
+                   logs
+                 else
+                   # Find all of the messages that are tagged with any of our
+                   # tags.
+                   logs.select do |log|
+                     pos.find { |tag| log.tagged?(tag) }
+                   end
+                 end
 
       # Now go through and remove any messages that match our negative tags
       messages = messages.reject do |log|
-        true if neg.detect do |tag| log.tagged?(tag) end
+        true if neg.find { |tag| log.tagged?(tag) }
       end
 
       if messages.empty?
-        Puppet.info "No messages to report to #{emails.join(",")}"
+        Puppet.info "No messages to report to #{emails.join(',')}"
         next
       else
-        matching_logs << [emails, messages.collect { |m| m.to_report }.join("\n")]
+        matching_logs << [emails, messages.map(&:to_report).join("\n")]
       end
     end
 
     matching_logs
   end
 
- # Load the config file
+  # Load the config file
   def parse(input)
     taglists = []
     config_hash = {}
@@ -78,16 +76,16 @@ Puppet::Reports.register_report(:tagmail) do
     input = input.split("\n")
     section = ''
     input.each do |value|
-      if value =~ /^\[.*\]/
-        section = value.gsub('[','').gsub(']','')
+      if value =~ %r{^\[.*\]}
+        section = value.delete('[').delete(']')
         file_hash[section.to_sym] = []
-      elsif value.strip.length > 0
-        if value =~ /^\s*#/
+      elsif !value.strip.empty?
+        if value =~ %r{^\s*#}
           # do nothing as this is a comment
-        elsif section and not section == ''
+        elsif section && (section != '')
           file_hash[section.to_sym] << value
         else
-          raise Puppet::Error, "Malformed tagmail.conf file"
+          raise Puppet::Error, 'Malformed tagmail.conf file'
         end
       end
     end
@@ -95,9 +93,7 @@ Puppet::Reports.register_report(:tagmail) do
     if file_hash[:transport]
       file_hash[:transport].each do |value|
         array = value.split('=')
-        array.collect do |value|
-          value.strip!
-        end
+        array.map(&:strip!)
         config_hash[array[0].to_sym] = array[1]
       end
     end
@@ -114,20 +110,20 @@ Puppet::Reports.register_report(:tagmail) do
 
   def load_defaults(config_hash)
     if config_hash[:smtpserver]
-      if not config_hash[:smtpport] or config_hash[:smtpport] == ''
+      if !(config_hash[:smtpport]) || config_hash[:smtpport] == ''
         config_hash[:smtpport] = '25'
       end
 
-      if not config_hash[:smtphelo] or config_hash[:smtphelo] == ''
+      if !(config_hash[:smtphelo]) || config_hash[:smtphelo] == ''
         config_hash[:smtphelo] = 'puppet.local'
       end
     end
 
-    if not config_hash[:sendmail] or config_hash[:sendmail] == ''
-        config_hash[:sendmail] = '/usr/sbin/sendmail'
-      end
+    if !(config_hash[:sendmail]) || config_hash[:sendmail] == ''
+      config_hash[:sendmail] = '/usr/sbin/sendmail'
+    end
 
-    if not config_hash[:reportfrom] or config_hash[:reportfrom] == ''
+    if !(config_hash[:reportfrom]) || config_hash[:reportfrom] == ''
       config_hash[:reportfrom] = 'Puppet Agent'
     end
 
@@ -140,31 +136,31 @@ Puppet::Reports.register_report(:tagmail) do
     text.split("\n").each do |line|
       taglist = emails = nil
       case line.chomp
-      when /^\s*#/; next
-      when /^\s*$/; next
-      when /^\s*(.+)\s*:\s*(.+)\s*$/
-        taglist = $1
-        emails = $2.sub(/#.*$/,'')
+      when %r{^\s*#} then next
+      when %r{^\s*$} then next
+      when %r{^\s*(.+)\s*:\s*(.+)\s*$}
+        taglist = Regexp.last_match(1)
+        emails = Regexp.last_match(2).sub(%r{#.*$}, '')
       else
-        raise ArgumentError, "Invalid tagmail config file"
+        raise ArgumentError, 'Invalid tagmail config file'
       end
 
       pos = []
       neg = []
-      taglist.sub(/\s+$/,'').split(/\s*,\s*/).each do |tag|
-        unless tag =~ /^!?(?:(::)?[-\w\.]+)*$/
+      taglist.sub(%r{\s+$}, '').split(%r{\s*,\s*}).each do |tag|
+        unless tag =~ %r{^!?(?:(::)?[-\w\.]+)*$}
           raise ArgumentError, "Invalid tag #{tag.inspect}"
         end
         case tag
-        when /^\w+/; pos << tag
-        when /^!\w+/; neg << tag.sub("!", '')
+        when %r{^\w+} then pos << tag
+        when %r{^!\w+} then neg << tag.sub('!', '')
         else
           raise Puppet::Error, "Invalid tag '#{tag}'"
         end
       end
 
       # Now split the emails
-      emails = emails.sub(/\s+$/,'').split(/\s*,\s*/)
+      emails = emails.sub(%r{\s+$}, '').split(%r{\s*,\s*})
       taglists << [emails, pos, neg]
     end
     taglists
@@ -177,12 +173,25 @@ Puppet::Reports.register_report(:tagmail) do
       return
     end
 
-    metrics = raw_summary || {} rescue {}
-    metrics['resources'] = metrics['resources'] || {} rescue {}
-    metrics['events'] = metrics['events'] || {} rescue {}
+    metrics = begin
+                raw_summary || {}
+              rescue
+                {}
+              end
+    metrics['resources'] = begin
+                             metrics['resources'] || {}
+                           rescue
+                             {}
+                           end
+    metrics['events'] = begin
+                          metrics['events'] || {}
+                        rescue
+                          {}
+                        end
 
-    if metrics['resources']['out_of_sync'] == 0 && metrics['resources']['changed'] == 0 && metrics['events']['audit'] == nil
-      Puppet.notice "Not sending tagmail report; no changes"
+    if metrics['resources']['out_of_sync'] == 0 && metrics['resources']['changed'] == 0 && metrics['events']['audit'].nil? # rubocop:disable Style/NumericPredicate
+      # Altering to "(metrics['resources']['out_of_sync'] ).zero?" from "metrics['resources']['out_of_sync'] == 0" as causes tests to fail due to 'nil:NilClass' errors.
+      Puppet.notice 'Not sending tagmail report; no changes'
       return
     end
 
@@ -201,44 +210,44 @@ Puppet::Reports.register_report(:tagmail) do
 
     # Starting a new thread has been commented out as it causes conflict with IO.popen, where the thread just dies
     # after the first run.
-    #Thread.new {
-      if tagmail_conf[:smtpserver] and tagmail_conf[:smtpserver] != "none"
-        begin
-          Net::SMTP.start(tagmail_conf[:smtpserver], tagmail_conf[:smtpport], tagmail_conf[:smtphelo]) do |smtp|
-            reports.each do |emails, messages|
-              smtp.open_message_stream(tagmail_conf[:reportfrom], *emails) do |p|
-                p.puts "From: #{tagmail_conf[:reportfrom]}"
-                p.puts "Subject: Puppet Report for #{self.host}"
-                p.puts "To: " + emails.join(", ")
-                p.puts "Date: #{Time.now.rfc2822}"
-                p.puts
-                p.puts messages
-              end
-            end
-          end
-        rescue => detail
-          message = "Could not send report emails through smtp: #{detail}"
-          Puppet.log_exception(detail, message)
-          raise Puppet::Error, message, detail.backtrace
-        end
-      else
-        begin
+    # Thread.new {
+    if tagmail_conf[:smtpserver] && tagmail_conf[:smtpserver] != 'none'
+      begin
+        Net::SMTP.start(tagmail_conf[:smtpserver], tagmail_conf[:smtpport], tagmail_conf[:smtphelo]) do |smtp|
           reports.each do |emails, messages|
-            # We need to open a separate process for every set of email addresses
-            IO.popen(tagmail_conf[:sendmail] + " " + emails.join(" "), "w") do |p|
+            smtp.open_message_stream(tagmail_conf[:reportfrom], *emails) do |p|
               p.puts "From: #{tagmail_conf[:reportfrom]}"
-              p.puts "Subject: Puppet Report for #{self.host}"
-              p.puts "To: " + emails.join(", ")
+              p.puts "Subject: Puppet Report for #{host}"
+              p.puts 'To: ' + emails.join(', ')
+              p.puts "Date: #{Time.now.rfc2822}"
               p.puts
               p.puts messages
             end
           end
-        rescue => detail
-          message = "Could not send report emails via sendmail: #{detail}"
-          Puppet.log_exception(detail, message)
-          raise Puppet::Error, message, detail.backtrace
         end
+      rescue => detail
+        message = "Could not send report emails through smtp: #{detail}"
+        Puppet.log_exception(detail, message)
+        raise Puppet::Error, message, detail.backtrace
       end
-    #}
+    else
+      begin
+        reports.each do |emails, messages|
+          # We need to open a separate process for every set of email addresses
+          IO.popen(tagmail_conf[:sendmail] + ' ' + emails.join(' '), 'w') do |p|
+            p.puts "From: #{tagmail_conf[:reportfrom]}"
+            p.puts "Subject: Puppet Report for #{host}"
+            p.puts 'To: ' + emails.join(', ')
+            p.puts
+            p.puts messages
+          end
+        end
+      rescue => detail
+        message = "Could not send report emails via sendmail: #{detail}"
+        Puppet.log_exception(detail, message)
+        raise Puppet::Error, message, detail.backtrace
+      end
+    end
+    # }
   end
 end

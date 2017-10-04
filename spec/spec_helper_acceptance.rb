@@ -3,11 +3,11 @@ require 'beaker/puppet_install_helper'
 require 'beaker/module_install_helper'
 
 run_puppet_install_helper
-install_ca_certs unless ENV['PUPPET_INSTALL_TYPE'] =~ /pe/i
+install_ca_certs unless ENV['PUPPET_INSTALL_TYPE'] =~ %r{pe}i
 install_module_on(hosts)
 install_module_dependencies_on(hosts)
 
-UNSUPPORTED_PLATFORMS = ['windows','Solaris','Darwin']
+UNSUPPORTED_PLATFORMS = %w[windows Solaris Darwin].freeze
 
 RSpec.configure do |c|
   # Readable test descriptions
