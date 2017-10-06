@@ -1,3 +1,11 @@
+##2017-10-06 Supported Release 2.3.0
+### Summary
+This release is to update the formatting of the module, rubocop having been run for all ruby files and been set to run automatically on all future commits.
+
+### Changed
+- Debian 9 has been added to metadata.json
+- Rubocop has been implemented.
+
 ##2017-09-19 Supported Release 2.2.1
 ### Summary
 This release is a roll up of changes. The bulk of the changes being module compatibiliity.
