@@ -2,7 +2,7 @@ require 'spec_helper_acceptance'
 
 describe 'tagmail tests', unless: UNSUPPORTED_PLATFORMS.include?(fact('osfamily')) do
   before(:all) do
-    pp = <<-EOS
+    pp = <<-MANIFEST
       ini_setting { "tagmailconf1":
         ensure  => present,
         path    => "${::settings::confdir}/puppet.conf",
@@ -51,11 +51,11 @@ describe 'tagmail tests', unless: UNSUPPORTED_PLATFORMS.include?(fact('osfamily'
       user {'fred':
         ensure => present,
       }
-      EOS
+      MANIFEST
 
     apply_manifest(pp, catch_failures: true)
 
-    pp_sendmail = <<-EOS
+    pp_sendmail = <<-MANIFEST
         if $::operatingsystem == 'Debian' {
           package { "sendmail-bin" :
             ensure => installed,
@@ -90,18 +90,18 @@ describe 'tagmail tests', unless: UNSUPPORTED_PLATFORMS.include?(fact('osfamily'
           require => Package['sendmail'],
         }
 
-      EOS
+      MANIFEST
 
     apply_manifest(pp_sendmail, catch_failures: true)
   end
 
   describe 'tagmail' do
-    context 'group all tests' do
-      pp = <<-EOS
+    context 'with group all tests' do
+      pp = <<-MANIFEST
           notify {'This is a test that should be present for all':
             tag => ['undefinedtag'],
           }
-      EOS
+      MANIFEST
       it 'applies' do
         apply_manifest(pp, catch_failures: true)
       end
@@ -133,12 +133,12 @@ describe 'tagmail tests', unless: UNSUPPORTED_PLATFORMS.include?(fact('osfamily'
       end
     end
 
-    context 'group tag1 tests' do
-      pp = <<-EOS
+    context 'with group tag1 tests' do
+      pp = <<-MANIFEST
           notify {'This is a test that should be present for tag1':
             tag => ['tag1'],
           }
-      EOS
+      MANIFEST
       it 'applies' do
         apply_manifest(pp, catch_failures: true)
       end
@@ -170,12 +170,12 @@ describe 'tagmail tests', unless: UNSUPPORTED_PLATFORMS.include?(fact('osfamily'
       end
     end
 
-    context 'group tag2 tests' do
-      pp = <<-EOS
+    context 'with group tag2 tests' do
+      pp = <<-MANIFEST
           notify {'This is a test that should be present for tag2':
             tag => ['tag2'],
           }
-      EOS
+      MANIFEST
       it 'applies' do
         apply_manifest(pp, catch_failures: true)
       end
@@ -207,12 +207,12 @@ describe 'tagmail tests', unless: UNSUPPORTED_PLATFORMS.include?(fact('osfamily'
       end
     end
 
-    context 'group tag3 tests' do
-      pp = <<-EOS
+    context 'with group tag3 tests' do
+      pp = <<-MANIFEST
           notify {'This is a test that should be present for tag3':
             tag => ['tag3'],
           }
-      EOS
+      MANIFEST
       it 'applies' do
         apply_manifest(pp, catch_failures: true)
       end
@@ -244,12 +244,12 @@ describe 'tagmail tests', unless: UNSUPPORTED_PLATFORMS.include?(fact('osfamily'
       end
     end
 
-    context 'group tag2 and tag3 tests' do
-      pp = <<-EOS
+    context 'with group tag2 and tag3 tests' do
+      pp = <<-MANIFEST
           notify {'This is a test that should be present for tag3':
             tag => ['tag2', 'tag3'],
           }
-      EOS
+      MANIFEST
       it 'applies' do
         apply_manifest(pp, catch_failures: true)
       end
@@ -281,8 +281,8 @@ describe 'tagmail tests', unless: UNSUPPORTED_PLATFORMS.include?(fact('osfamily'
       end
     end
 
-    context 'reportfrom test' do
-      pp = <<-EOS
+    context 'with reportfrom test' do
+      pp = <<-MANIFEST
           file {"${::settings::confdir}/tagmail.conf":
             ensure => present,
             content => '[transport]\nreportfrom=MyCoolPuppetAgent\n\n[tagmap]\nall: foo@localhost,bar@localhost\ntag1: baz@localhost\ntag2, !tag3: qux@localhost\ntag3: fred@localhost',
@@ -292,7 +292,7 @@ describe 'tagmail tests', unless: UNSUPPORTED_PLATFORMS.include?(fact('osfamily'
             tag => ['undefinedtag'],
             require => File["${::settings::confdir}/tagmail.conf"]
           }
-      EOS
+      MANIFEST
       it 'applies' do
         apply_manifest(pp, catch_failures: true)
       end

@@ -167,7 +167,7 @@ Puppet::Reports.register_report(:tagmail) do
   end
 
   # Process the report.  This just calls the other associated messages.
-  def process(tagmail_conf_file = "#{Puppet[:confdir]}/tagmail.conf")
+  def process(tagmail_conf_file = (Puppet[:confdir] + '/tagmail.conf'))
     unless Puppet::FileSystem.exist?(tagmail_conf_file)
       Puppet.notice "Cannot send tagmail report; no tagmap file #{tagmail_conf_file}"
       return
@@ -175,17 +175,17 @@ Puppet::Reports.register_report(:tagmail) do
 
     metrics = begin
                 raw_summary || {}
-              rescue
+              rescue StandardError
                 {}
               end
     metrics['resources'] = begin
                              metrics['resources'] || {}
-                           rescue
+                           rescue StandardError
                              {}
                            end
     metrics['events'] = begin
                           metrics['events'] || {}
-                        rescue
+                        rescue StandardError
                           {}
                         end
 
@@ -225,7 +225,7 @@ Puppet::Reports.register_report(:tagmail) do
             end
           end
         end
-      rescue => detail
+      rescue StandardError => detail
         message = "Could not send report emails through smtp: #{detail}"
         Puppet.log_exception(detail, message)
         raise Puppet::Error, message, detail.backtrace
@@ -242,7 +242,7 @@ Puppet::Reports.register_report(:tagmail) do
             p.puts messages
           end
         end
-      rescue => detail
+      rescue StandardError => detail
         message = "Could not send report emails via sendmail: #{detail}"
         Puppet.log_exception(detail, message)
         raise Puppet::Error, message, detail.backtrace
