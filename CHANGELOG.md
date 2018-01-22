@@ -1,3 +1,11 @@
+## 2017-10-06 Supported Release 2.4.0
+### Summary
+This release introduces the PDK to the module - making it PDK compatible.
+
+### Changed
+- The module has been cleaned up and had rubocop enabled.
+- The module has been fully converted to the PDK.
+
 ## 2017-10-06 Supported Release 2.3.0
 ### Summary
 This release is to update the formatting of the module, rubocop having been run for all ruby files and been set to run automatically on all future commits.
