@@ -26,13 +26,13 @@ describe tagmail do
   end
 
   {
-    'tag: abuse@domain.com' => [%w[abuse@domain.com], %w[tag], []],
-    'tag.localhost: abuse@domain.com' => [%w[abuse@domain.com], %w[tag.localhost], []],
-    'tag, other: abuse@domain.com' => [%w[abuse@domain.com], %w[tag other], []],
-    'tag-other: abuse@domain.com' => [%w[abuse@domain.com], %w[tag-other], []],
-    'tag, !other: abuse@domain.com' => [%w[abuse@domain.com], %w[tag], %w[other]],
-    'tag, !other, one, !two: abuse@domain.com' => [%w[abuse@domain.com], %w[tag one], %w[other two]],
-    'tag: abuse@domain.com, other@domain.com' => [%w[abuse@domain.com other@domain.com], %w[tag], []],
+    'tag: abuse@domain.com' => [['abuse@domain.com'], ['tag'], []],
+    'tag.localhost: abuse@domain.com' => [['abuse@domain.com'], ['tag.localhost'], []],
+    'tag, other: abuse@domain.com' => [['abuse@domain.com'], ['tag', 'other'], []],
+    'tag-other: abuse@domain.com' => [['abuse@domain.com'], ['tag-other'], []],
+    'tag, !other: abuse@domain.com' => [['abuse@domain.com'], ['tag'], ['other']],
+    'tag, !other, one, !two: abuse@domain.com' => [['abuse@domain.com'], ['tag', 'one'], ['other', 'two']],
+    'tag: abuse@domain.com, other@domain.com' => [['abuse@domain.com', 'other@domain.com'], ['tag'], []],
 
   }.each do |line, results|
     it "should parse '#{line}' as #{results.inspect}" do
@@ -42,15 +42,15 @@ describe tagmail do
 
   describe 'when matching logs' do
     before(:each) do
-      processor << Puppet::Util::Log.new(level: :notice, message: 'first', tags: %w[one])
-      processor << Puppet::Util::Log.new(level: :notice, message: 'second', tags: %w[one two])
-      processor << Puppet::Util::Log.new(level: :notice, message: 'third', tags: %w[one two three])
+      processor << Puppet::Util::Log.new(level: :notice, message: 'first', tags: ['one'])
+      processor << Puppet::Util::Log.new(level: :notice, message: 'second', tags: ['one', 'two'])
+      processor << Puppet::Util::Log.new(level: :notice, message: 'third', tags: ['one', 'two', 'three'])
     end
 
     def match(pos = [], neg = [])
       pos = Array(pos)
       neg = Array(neg)
-      result = processor.match([[%w[abuse@domain.com], pos, neg]])
+      result = processor.match([[['abuse@domain.com'], pos, neg]])
       actual_result = result.shift
       if actual_result
         actual_result[1]
@@ -61,7 +61,7 @@ describe tagmail do
 
     it "matches all messages when provided the 'all' tag as a positive matcher" do
       results = match('all')
-      %w[first second third].each do |str|
+      ['first', 'second', 'third'].each do |str|
         results.should be_include(str)
       end
     end
@@ -103,7 +103,7 @@ describe tagmail do
 
       let(:log_entry) do
         Puppet::Util::Log.new(
-          level: :notice, message: 'Secure change', tags: %w[secure],
+          level: :notice, message: 'Secure change', tags: ['secure'],
         )
       end
 
@@ -175,7 +175,7 @@ describe tagmail do
         Puppet::Util::Log.new(
           level: :notice,
           message: 'Unnotices change',
-          tags: %w[not_present_in_tagmail.conf],
+          tags: ['not_present_in_tagmail.conf'],
         )
       end
 
