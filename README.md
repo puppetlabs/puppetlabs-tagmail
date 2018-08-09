@@ -99,7 +99,9 @@ webserver, !mailserver: httpadmins@example.com, you@example.com
 
 ## Limitations
 
-This module should be used only with Puppet Enterprise and Puppet versions 3.8 or newer, and only if you're using the JVM on the Puppet master. For older versions of Puppet, or if using the legacy Puppet master on Apache/Rack/Passenger, use Puppet's built-in tagmail feature.
+For an extensive list of supported operating systems, see [metadata.json](https://github.com/puppetlabs/puppetlabs-tagmail/blob/master/metadata.json)
+
+This module should be used only if you're using the JVM on the Puppet master. For older versions of Puppet, or if using the legacy Puppet master on Apache/Rack/Passenger, use Puppet's built-in tagmail feature.
 
 ## Development
 
