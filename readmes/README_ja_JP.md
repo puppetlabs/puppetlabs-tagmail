@@ -2,13 +2,13 @@
 
 #### 目次
 
-1. [モジュールの説明 - モジュールの機能とその有益性](#説明)
-2. [セットアップ - タグメール導入の基本](#セットアップ)
-   * [要件](#要件)
-   * [タグメールの使用を始める](#タグメールの使用を始める)
-3. [使用 - 設定オプションと追加機能](#使用)
-4. [制約 - OS互換性など](#制約)
-5. [開発 - モジュール貢献についてのガイド](#開発)
+1. [モジュールの説明 - モジュールの機能とその有益性](#description)
+2. [セットアップ - タグメール導入の基本](#setup)
+   * [要件](#requirements)
+   * [タグメールの使用を始める](#beginning-with-tagmail)
+3. [使用 - 設定オプションと追加機能](#usage)
+4. [制約 - OS互換性など](#limitations)
+5. [開発 - モジュール貢献についてのガイド](#development)
 
 
 ## 説明
@@ -27,7 +27,7 @@
 
 ### タグメールの使用を始める
 
-1. 各Puppet agent上で、[`pluginsync`](https://docs.puppet.com/puppet/latest/configuration.html#pluginsync)および[`report`](https://docs.puppet.com/puppet/latest/configuration.html#report)設定が有効になっていることを確認します(これらの設定は通常、デフォルトで有効になっています)。
+1. 各Puppet agent上で、[`pluginsync`](https://docs.puppet.com/latest/configuration.html#pluginsync)および[`report`](https://docs.puppet.com/latest/configuration.html#report)設定が有効になっていることを確認します(これらの設定は通常、デフォルトで有効になっています)。
 
   ```
 [agent]
@@ -35,7 +35,7 @@ report = true
 pluginsync = true
   ```
 
-2. Puppet master上で、master画面の[`reports`](https://docs.puppetlabs.com/references/latest/configuration.html#reports)設定にタグメールを含めます。
+2. Puppet master上で、master画面の[`reports`](https://docs.puppetlabs.com/references/4.2.latest/configuration.html#reports)設定にタグメールを含めます。
 
   ```
 [master]
@@ -105,6 +105,6 @@ webserver, !mailserver: httpadmins@example.com, you@example.com
 
 Puppet ForgeのPuppet Labsモジュールはオープンプロジェクトで、良い状態に保つためには、コミュニティの貢献が必要不可欠です。Puppetが役に立つはずでありながら、私たちがアクセスできないプラットフォームやハードウェア、ソフトウェア、デプロイ構成は無数にあります。私たちの目標は、できる限り簡単に変更に貢献し、みなさまの環境で私たちのモジュールが機能できるようにすることにあります。最高の状態を維持できるようにするために、コントリビュータが従う必要のあるいくつかのガイドラインが存在します。
 
-詳細については、[モジュールコントリビューションガイド](https://docs.puppet.com/forge/contributing.html)を参照してください。
+For more information, see our [module contribution guide.](https://docs.puppet.com/forge/contributing.html)
 
 すでに参加している人を見るには、[コントリビュータのリスト](https://github.com/puppetlabs/puppetlabs-tagmail/graphs/contributors)を参照してください。
