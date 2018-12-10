@@ -202,7 +202,7 @@ Puppet::Reports.register_report(:tagmail) do
 
     # Now find any appropriately tagged messages.
     reports = match(taglists)
-
+    reports.reject! { |item| item =~ %r{Applied\ catalog\ in\ .*\ seconds} }
     send(reports) unless reports.empty?
   end
 
