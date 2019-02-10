@@ -189,7 +189,10 @@ Puppet::Reports.register_report(:tagmail) do
                           {}
                         end
 
-    if metrics['resources']['out_of_sync'] == 0 && metrics['resources']['changed'] == 0 && metrics['events']['audit'].nil? # rubocop:disable Style/NumericPredicate
+    # Check for 'err' level logs, which indicates failed catalog
+    logs_err = logs.index { |x| x.level.to_s == 'err' }
+
+    if logs_err.nil? && metrics['resources']['out_of_sync'] == 0 && metrics['resources']['changed'] == 0 && metrics['events']['audit'].nil? # rubocop:disable Style/NumericPredicate
       # Altering to "(metrics['resources']['out_of_sync'] ).zero?" from "metrics['resources']['out_of_sync'] == 0" as causes tests to fail due to 'nil:NilClass' errors.
       Puppet.notice 'Not sending tagmail report; no changes'
       return
