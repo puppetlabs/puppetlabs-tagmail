@@ -7,9 +7,7 @@
   "source": "git://github.com/puppetlabs/puppetlabs-tagmail.git",
   "project_page": "https://github.com/puppetlabs/puppetlabs-tagmail/",
   "issues_url": "https://tickets.puppetlabs.com/browse/MODULES",
-  "dependencies": [
-
-  ],
+  "dependencies": [],
   "operatingsystem_support": [
     {
       "operatingsystem": "RedHat",
@@ -61,7 +59,7 @@
   "requirements": [
     {
       "name": "puppet",
-      "version_requirement": ">= 4.7.0 < 7.0.0"
+      "version_requirement": ">= 5.10.0 < 7.0.0"
     }
   ],
   "description": "This module provides a report processor that sends events to email addresses based on tagging of resources",
