@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](http://semver.org).
 
+## [v3.0.0](https://github.com/puppetlabs/puppetlabs-tagmail/tree/v3.0.0) (2019-04-25)
+
+[Full Changelog](https://github.com/puppetlabs/puppetlabs-tagmail/compare/2.5.0...v3.0.0)
+
+### Changed
+
+- pdksync - \(MODULES-8444\) - Raise lower Puppet bound [\#123](https://github.com/puppetlabs/puppetlabs-tagmail/pull/123) ([david22swan](https://github.com/david22swan))
+
+### Fixed
+
+- checking for logs with level: err [\#117](https://github.com/puppetlabs/puppetlabs-tagmail/pull/117) ([vchepkov](https://github.com/vchepkov))
+- pdksync - \(FM-7655\) Fix rubygems-update for ruby \< 2.3 [\#111](https://github.com/puppetlabs/puppetlabs-tagmail/pull/111) ([tphoney](https://github.com/tphoney))
+
 ## [2.5.0](https://github.com/puppetlabs/puppetlabs-tagmail/tree/2.5.0) (2018-09-27)
 
 [Full Changelog](https://github.com/puppetlabs/puppetlabs-tagmail/compare/2.4.0...2.5.0)
