@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](http://semver.org).
 
+## [v3.1.0](https://github.com/puppetlabs/puppetlabs-tagmail/tree/v3.1.0) (2019-10-15)
+
+[Full Changelog](https://github.com/puppetlabs/puppetlabs-tagmail/compare/v3.0.0...v3.1.0)
+
+### Added
+
+- FM-8412 - add support for debian 10 [\#136](https://github.com/puppetlabs/puppetlabs-tagmail/pull/136) ([lionce](https://github.com/lionce))
+- \(FM-8231\) convert to use puppet\_litmus [\#134](https://github.com/puppetlabs/puppetlabs-tagmail/pull/134) ([tphoney](https://github.com/tphoney))
+- \(FM-8033\) Add RedHat 8 support [\#127](https://github.com/puppetlabs/puppetlabs-tagmail/pull/127) ([eimlav](https://github.com/eimlav))
+- Change - Do not send out reports if there are no resources included [\#109](https://github.com/puppetlabs/puppetlabs-tagmail/pull/109) ([blackknight36](https://github.com/blackknight36))
+
 ## [v3.0.0](https://github.com/puppetlabs/puppetlabs-tagmail/tree/v3.0.0) (2019-04-25)
 
 [Full Changelog](https://github.com/puppetlabs/puppetlabs-tagmail/compare/2.5.0...v3.0.0)
