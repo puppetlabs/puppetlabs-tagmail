@@ -6,8 +6,7 @@
   branches:
   - release
   includes:
-  - bundler_args: 
-    dist: trusty
+  - bundler_args:
     env: PLATFORMS=deb_puppet5
     rvm: 2.5.3
     before_script:
@@ -19,8 +18,7 @@
     services: docker
     sudo: required
     stage: acceptance
-  - bundler_args: 
-    dist: trusty
+  - bundler_args:
     env: PLATFORMS=deb_puppet6
     rvm: 2.5.3
     before_script:
@@ -32,8 +30,7 @@
     services: docker
     sudo: required
     stage: acceptance
-  - bundler_args: 
-    dist: trusty
+  - bundler_args:
     env: PLATFORMS=ubuntu_puppet5
     rvm: 2.5.3
     before_script:
@@ -45,8 +42,7 @@
     services: docker
     sudo: required
     stage: acceptance
-  - bundler_args: 
-    dist: trusty
+  - bundler_args:
     env: PLATFORMS=ubuntu_puppet6
     rvm: 2.5.3
     before_script:
@@ -58,8 +54,7 @@
     services: docker
     sudo: required
     stage: acceptance
-  - bundler_args: 
-    dist: trusty
+  - bundler_args:
     env: PLATFORMS=el6_puppet5
     rvm: 2.5.3
     before_script:
@@ -71,8 +66,7 @@
     services: docker
     sudo: required
     stage: acceptance
-  - bundler_args: 
-    dist: trusty
+  - bundler_args:
     env: PLATFORMS=el6_puppet6
     rvm: 2.5.3
     before_script:
@@ -84,8 +78,7 @@
     services: docker
     sudo: required
     stage: acceptance
-  - bundler_args: 
-    dist: trusty
+  - bundler_args:
     env: PLATFORMS=el7_puppet5
     rvm: 2.5.3
     before_script:
@@ -97,8 +90,7 @@
     services: docker
     sudo: required
     stage: acceptance
-  - bundler_args: 
-    dist: trusty
+  - bundler_args:
     env: PLATFORMS=el7_puppet6
     rvm: 2.5.3
     before_script:
