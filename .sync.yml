@@ -3,6 +3,8 @@
   delete: true
 ".travis.yml":
   dist: xenial
+  deploy_to_forge:
+    enabled: false
   branches:
   - release
   includes:
