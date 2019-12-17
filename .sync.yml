@@ -8,7 +8,7 @@
   branches:
   - release
   includes:
-  - bundler_args:
+  - bundler_args: 
     env: PLATFORMS=deb_puppet5
     rvm: 2.5.3
     before_script:
@@ -20,7 +20,7 @@
     services: docker
     sudo: required
     stage: acceptance
-  - bundler_args:
+  - bundler_args: 
     env: PLATFORMS=deb_puppet6
     rvm: 2.5.3
     before_script:
@@ -32,7 +32,7 @@
     services: docker
     sudo: required
     stage: acceptance
-  - bundler_args:
+  - bundler_args: 
     env: PLATFORMS=ubuntu_puppet5
     rvm: 2.5.3
     before_script:
@@ -44,7 +44,7 @@
     services: docker
     sudo: required
     stage: acceptance
-  - bundler_args:
+  - bundler_args: 
     env: PLATFORMS=ubuntu_puppet6
     rvm: 2.5.3
     before_script:
@@ -56,7 +56,7 @@
     services: docker
     sudo: required
     stage: acceptance
-  - bundler_args:
+  - bundler_args: 
     env: PLATFORMS=el6_puppet5
     rvm: 2.5.3
     before_script:
@@ -68,7 +68,7 @@
     services: docker
     sudo: required
     stage: acceptance
-  - bundler_args:
+  - bundler_args: 
     env: PLATFORMS=el6_puppet6
     rvm: 2.5.3
     before_script:
@@ -80,7 +80,7 @@
     services: docker
     sudo: required
     stage: acceptance
-  - bundler_args:
+  - bundler_args: 
     env: PLATFORMS=el7_puppet5
     rvm: 2.5.3
     before_script:
@@ -92,7 +92,7 @@
     services: docker
     sudo: required
     stage: acceptance
-  - bundler_args:
+  - bundler_args: 
     env: PLATFORMS=el7_puppet6
     rvm: 2.5.3
     before_script:
@@ -105,6 +105,9 @@
     sudo: required
     stage: acceptance
   simplecov: true
+  notifications:
+    slack:
+      secure: XCjKJZ+9tX+z0ONd9h5H4jrwxU1V6WbcrZYfRB66KJEDH+Zxa6sJvU2SHoH3H4yAn5DNhAi/syzWJl4Ht/23CAR4qr0GmdDZxr8xUaha2jmB3nrletTqzftxMgNJUvZ3ZpsSmPpBS+9jQKZ6IoXrVJI+Y9mzXd7oGeFENPiHk3o=
 appveyor.yml:
   delete: true
 Gemfile:
