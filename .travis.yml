@@ -30,7 +30,6 @@ jobs:
       - "bundle exec rake 'litmus:install_agent[puppet5]'"
       - "bundle exec rake litmus:install_module"
       bundler_args:
-      dist: trusty
       env: PLATFORMS=travis_deb_puppet5
       rvm: 2.5.7
       script: ["travis_wait 45 bundle exec rake litmus:acceptance:parallel"]
@@ -42,7 +41,6 @@ jobs:
       - "bundle exec rake 'litmus:install_agent[puppet5]'"
       - "bundle exec rake litmus:install_module"
       bundler_args:
-      dist: trusty
       env: PLATFORMS=travis_ub_puppet5
       rvm: 2.5.7
       script: ["travis_wait 45 bundle exec rake litmus:acceptance:parallel"]
@@ -54,7 +52,6 @@ jobs:
       - "bundle exec rake 'litmus:install_agent[puppet5]'"
       - "bundle exec rake litmus:install_module"
       bundler_args:
-      dist: trusty
       env: PLATFORMS=travis_el6_puppet5
       rvm: 2.5.7
       script: ["travis_wait 45 bundle exec rake litmus:acceptance:parallel"]
@@ -66,7 +63,6 @@ jobs:
       - "bundle exec rake 'litmus:install_agent[puppet5]'"
       - "bundle exec rake litmus:install_module"
       bundler_args:
-      dist: trusty
       env: PLATFORMS=travis_el7_puppet5
       rvm: 2.5.7
       script: ["travis_wait 45 bundle exec rake litmus:acceptance:parallel"]
@@ -78,7 +74,6 @@ jobs:
       - "bundle exec rake 'litmus:install_agent[puppet6]'"
       - "bundle exec rake litmus:install_module"
       bundler_args:
-      dist: trusty
       env: PLATFORMS=travis_deb_puppet6
       rvm: 2.5.7
       script: ["travis_wait 45 bundle exec rake litmus:acceptance:parallel"]
@@ -90,7 +85,6 @@ jobs:
       - "bundle exec rake 'litmus:install_agent[puppet6]'"
       - "bundle exec rake litmus:install_module"
       bundler_args:
-      dist: trusty
       env: PLATFORMS=travis_ub_puppet6
       rvm: 2.5.7
       script: ["travis_wait 45 bundle exec rake litmus:acceptance:parallel"]
@@ -102,7 +96,6 @@ jobs:
       - "bundle exec rake 'litmus:install_agent[puppet6]'"
       - "bundle exec rake litmus:install_module"
       bundler_args:
-      dist: trusty
       env: PLATFORMS=travis_el6_puppet6
       rvm: 2.5.7
       script: ["travis_wait 45 bundle exec rake litmus:acceptance:parallel"]
@@ -114,7 +107,6 @@ jobs:
       - "bundle exec rake 'litmus:install_agent[puppet6]'"
       - "bundle exec rake litmus:install_module"
       bundler_args:
-      dist: trusty
       env: PLATFORMS=travis_el7_puppet6
       rvm: 2.5.7
       script: ["travis_wait 45 bundle exec rake litmus:acceptance:parallel"]
