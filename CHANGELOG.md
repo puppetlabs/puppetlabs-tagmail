@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](http://semver.org).
 
+## [v3.3.0](https://github.com/puppetlabs/puppetlabs-tagmail/tree/v3.3.0) (2020-06-30)
+
+[Full Changelog](https://github.com/puppetlabs/puppetlabs-tagmail/compare/v3.3.0...v3.2.0)
+
+### Added
+
+- \(IAC-746\) - Add ubuntu 20.04 support [\#171](https://github.com/puppetlabs/puppetlabs-tagmail/pull/171) ([david22swan](https://github.com/david22swan))
+
 ## [v3.2.0](https://github.com/puppetlabs/puppetlabs-tagmail/tree/v3.2.0) (2019-12-09)
 
 [Full Changelog](https://github.com/puppetlabs/puppetlabs-tagmail/compare/v3.1.0...v3.2.0)
@@ -42,6 +50,10 @@ All notable changes to this project will be documented in this file. The format 
 
 - pdksync - \(MODULES-6805\) metadata.json shows support for puppet 6 [\#100](https://github.com/puppetlabs/puppetlabs-tagmail/pull/100) ([tphoney](https://github.com/tphoney))
 - \(FM-7255\) - Addition of support for Ubuntu 18.04 to tagmail [\#90](https://github.com/puppetlabs/puppetlabs-tagmail/pull/90) ([david22swan](https://github.com/david22swan))
+
+### Fixed
+
+- \[FM-6970\] Removal of unsupported OS from tagmail [\#88](https://github.com/puppetlabs/puppetlabs-tagmail/pull/88) ([david22swan](https://github.com/david22swan))
 
 ## 2.4.0
 ### Summary
