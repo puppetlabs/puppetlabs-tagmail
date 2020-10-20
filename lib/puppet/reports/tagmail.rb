@@ -3,6 +3,7 @@ require 'pp'
 
 require 'net/smtp'
 require 'time'
+require 'tempfile'
 
 Puppet::Reports.register_report(:tagmail) do
   @tagmail_conf = {}
@@ -236,13 +237,17 @@ Puppet::Reports.register_report(:tagmail) do
     else
       begin
         reports.each do |emails, messages|
-          # We need to open a separate process for every set of email addresses
-          IO.popen(tagmail_conf[:sendmail] + ' ' + emails.join(' '), 'w') do |p|
-            p.puts "From: #{tagmail_conf[:reportfrom]}"
-            p.puts "Subject: Puppet Report for #{host}"
-            p.puts 'To: ' + emails.join(', ')
-            p.puts
-            p.puts messages
+          email = Tempfile.new('tagmail')
+          begin
+            email.write("From: #{tagmail_conf[:reportfrom]}\n")
+            email.write("Subject: Puppet Report for #{host}\n")
+            email.write("To: #{emails.join(', ')}\n\n")
+            email.write(messages)
+            email.rewind
+            Puppet::Util::Execution.execute("#{tagmail_conf[:sendmail]} #{emails.join(' ')} < #{email.path}")
+          ensure
+            email.close
+            email.unlink
           end
         end
       rescue StandardError => detail
