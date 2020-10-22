@@ -236,6 +236,13 @@ Puppet::Reports.register_report(:tagmail) do
       end
     else
       begin
+        email = Tempfile.new('tagmail')
+        begin
+
+        ensure
+          email.close
+          email.unlink
+        end
         reports.each do |emails, messages|
           # We need to open a separate process for every set of email addresses
           IO.popen(tagmail_conf[:sendmail] + ' ' + emails.join(' '), 'w') do |p|
