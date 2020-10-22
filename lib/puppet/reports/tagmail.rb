@@ -3,6 +3,7 @@ require 'pp'
 
 require 'net/smtp'
 require 'time'
+require 'tempfile'
 
 Puppet::Reports.register_report(:tagmail) do
   @tagmail_conf = {}
