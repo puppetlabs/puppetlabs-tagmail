@@ -238,7 +238,6 @@ Puppet::Reports.register_report(:tagmail) do
       begin
         email = Tempfile.new('tagmail')
         begin
-
         ensure
           email.close
           email.unlink
