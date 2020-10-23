@@ -2,13 +2,21 @@
 
 All notable changes to this project will be documented in this file. The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](http://semver.org).
 
-## [v3.3.0](https://github.com/puppetlabs/puppetlabs-tagmail/tree/v3.3.0) (2020-06-30)
+## [v3.4.0](https://github.com/puppetlabs/puppetlabs-tagmail/tree/v3.3.0) (2020-10-23)
 
-[Full Changelog](https://github.com/puppetlabs/puppetlabs-tagmail/compare/v3.3.0...v3.2.0)
+[Full Changelog](https://github.com/puppetlabs/puppetlabs-tagmail/compare/v3.3.0...v3.3.0)
 
 ### Added
 
-- \(IAC-746\) - Add ubuntu 20.04 support [\#171](https://github.com/puppetlabs/puppetlabs-tagmail/pull/171) ([david22swan](https://github.com/david22swan))
+- pdksync - \(IAC-973\) - Update travis/appveyor to run on new default branch `main` [\#176](https://github.com/puppetlabs/puppetlabs-tagmail/pull/176) ([david22swan](https://github.com/david22swan))
+
+### Fixed
+
+- \(MODULES-10814\) - Replace `IO.popen` with `Puppet:Util:Execution.execute` [\#182](https://github.com/puppetlabs/puppetlabs-tagmail/pull/182) ([david22swan](https://github.com/david22swan))
+
+## [v3.3.0](https://github.com/puppetlabs/puppetlabs-tagmail/tree/v3.3.0) (2020-07-01)
+
+[Full Changelog](https://github.com/puppetlabs/puppetlabs-tagmail/compare/v3.2.0...v3.3.0)
 
 ## [v3.2.0](https://github.com/puppetlabs/puppetlabs-tagmail/tree/v3.2.0) (2019-12-09)
 
@@ -24,6 +32,7 @@ All notable changes to this project will be documented in this file. The format 
 
 ### Added
 
+- \(IAC-746\) - Add ubuntu 20.04 support [\#171](https://github.com/puppetlabs/puppetlabs-tagmail/pull/171) ([david22swan](https://github.com/david22swan))
 - FM-8412 - add support for debian 10 [\#136](https://github.com/puppetlabs/puppetlabs-tagmail/pull/136) ([lionce](https://github.com/lionce))
 - \(FM-8231\) convert to use puppet\_litmus [\#134](https://github.com/puppetlabs/puppetlabs-tagmail/pull/134) ([tphoney](https://github.com/tphoney))
 - \(FM-8033\) Add RedHat 8 support [\#127](https://github.com/puppetlabs/puppetlabs-tagmail/pull/127) ([eimlav](https://github.com/eimlav))
