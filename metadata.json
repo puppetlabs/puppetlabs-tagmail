@@ -69,7 +69,7 @@
     }
   ],
   "description": "This module provides a report processor that sends events to email addresses based on tagging of resources",
-  "template-url": "https://github.com/puppetlabs/pdk-templates#master",
-  "template-ref": "heads/master-0-gd610ead",
+  "template-url": "https://github.com/puppetlabs/pdk-templates#main",
+  "template-ref": "heads/main-0-g874030e",
   "pdk-version": "1.18.1"
 }
