@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'puppet'
 require 'pp'
 
@@ -77,11 +79,11 @@ Puppet::Reports.register_report(:tagmail) do
     input = input.split("\n")
     section = ''
     input.each do |value|
-      if value =~ %r{^\[.*\]}
+      if value.match?(%r{^\[.*\]})
         section = value.delete('[').delete(']')
         file_hash[section.to_sym] = []
       elsif !value.strip.empty?
-        if value =~ %r{^\s*#}
+        if value.match?(%r{^\s*#})
           # do nothing as this is a comment
         elsif section && (section != '')
           file_hash[section.to_sym] << value
@@ -91,12 +93,10 @@ Puppet::Reports.register_report(:tagmail) do
       end
     end
 
-    if file_hash[:transport]
-      file_hash[:transport].each do |value|
-        array = value.split('=')
-        array.map(&:strip!)
-        config_hash[array[0].to_sym] = array[1]
-      end
+    file_hash[:transport]&.each do |value|
+      array = value.split('=')
+      array.map(&:strip!)
+      config_hash[array[0].to_sym] = array[1]
     end
 
     if file_hash[:tagmap]
@@ -149,7 +149,7 @@ Puppet::Reports.register_report(:tagmail) do
       pos = []
       neg = []
       taglist.sub(%r{\s+$}, '').split(%r{\s*,\s*}).each do |tag|
-        unless tag =~ %r{^!?(?:(::)?[-\w\.]+)*$}
+        unless tag.match?(%r{^!?(?:(::)?[-\w\.]+)*$})
           raise ArgumentError, "Invalid tag #{tag.inspect}"
         end
         case tag
