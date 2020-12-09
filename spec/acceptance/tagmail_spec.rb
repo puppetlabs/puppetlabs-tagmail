@@ -8,7 +8,7 @@ describe 'tagmail tests', unless: UNSUPPORTED_PLATFORMS.include?(os[:family]) do
 			ini_setting { "tagmailconf1":
 				ensure  => present,
 				path    => "${::settings::confdir}/puppet.conf",
-				section => 'master',
+				section => 'main',
 				setting => 'tagmap',
 				value   => '$confdir/tagmail.conf',
 			}
@@ -16,7 +16,7 @@ describe 'tagmail tests', unless: UNSUPPORTED_PLATFORMS.include?(os[:family]) do
 			ini_setting { "tagmailconf2":
 				ensure  => present,
 				path    => "${::settings::confdir}/puppet.conf",
-				section => 'master',
+				section => 'main',
 				setting => 'reports',
 				value   => 'puppetdb,console,tagmail',
 			}
