@@ -28,14 +28,14 @@ Puppet::Reports.register_report(:tagmail) do
     An example `tagmail.conf`:
         [transport]
         sendmail = /usr/sbin/sendmail
-        reportfrom = Puppet Master Server
+        reportfrom = Puppet Server
         [tagmap]
         all: me@domain.com
         webserver, !mailserver: httpadmins@domain.com
     This will send all messages to `me@domain.com`, and all messages from
     webservers that are not also from mailservers to `httpadmins@domain.com`.
     If you are using anti-spam controls such as grey-listing on your mail
-    server, you should whitelist the sending email address (controlled by
+    server, you should allowlist the sending email address (controlled by
     `reportfrom` configuration option) to ensure your email is not discarded as spam.
     "
 

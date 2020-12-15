@@ -30,22 +30,22 @@
 1. 各Puppet agent上で、[`pluginsync`](https://docs.puppet.com/latest/configuration.html#pluginsync)および[`report`](https://docs.puppet.com/latest/configuration.html#report)設定が有効になっていることを確認します(これらの設定は通常、デフォルトで有効になっています)。
 
   ```
-[agent]
+[main]
 report = true
 pluginsync = true
   ```
 
-2. Puppet master上で、master画面の[`reports`](https://docs.puppetlabs.com/references/4.2.latest/configuration.html#reports)設定にタグメールを含めます。
+2. Puppet server上で、server画面の[`reports`](https://docs.puppetlabs.com/references/4.2.latest/configuration.html#reports)設定にタグメールを含めます。
 
   ```
-[master]
+[server]
 tagmap = $confdir/tagmail.conf
 reports = puppetdb,console,tagmail
   ```
 
 3. メールサーバー上でグレイリストなどのアンチスパムコントロールを使用している場合は、Puppetの送信するEメールアドレスをホワイトリストに入れ、タグメールレポートがスパムとして破棄されないようにします。この設定は、`puppet.conf`の`reportfrom`設定でコントロールできます。
 
-4. masterのPuppet confdirで、`tagmail.conf`ファイルを作成します。このファイルに、Eメール送信設定オプションとタグそのものが含まれます。
+4. serverのPuppet confdirで、`tagmail.conf`ファイルを作成します。このファイルに、Eメール送信設定オプションとタグそのものが含まれます。
 
 ## 使用
 
@@ -99,7 +99,7 @@ webserver, !mailserver: httpadmins@example.com, you@example.com
 
 ## 制約
 
-このモジュールは、Puppet EnterpriseおよびPuppetバージョン3.8以降のみをサポートし、Puppet master上でJVMを使用している場合のみ使用できます。それよりも古いバージョンのPuppetや、Apache/Rack/Passenger上で古いPuppet masterを使用している場合は、Puppet内蔵のタグメール機能を使用してください。
+このモジュールは、Puppet EnterpriseおよびPuppetバージョン3.8以降のみをサポートし、Puppet server上でJVMを使用している場合のみ使用できます。それよりも古いバージョンのPuppetや、Apache/Rack/Passenger上で古いPuppet serverを使用している場合は、Puppet内蔵のタグメール機能を使用してください。
 
 ## 開発
 

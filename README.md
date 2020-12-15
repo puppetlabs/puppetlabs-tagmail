@@ -30,22 +30,22 @@ This module supports Puppet Enterprise and Puppet versions 3.8 or newer. For old
 1. On each Puppet agent, make sure the [`pluginsync`](https://docs.puppet.com/puppet/latest/configuration.html#pluginsync) and [`report`](https://docs.puppet.com/puppet/latest/configuration.html#report) settings are enabled. (These settings are normally enabled by default.)
 
   ```
-[agent]
+[main]
 report = true
 pluginsync = true
   ```
 
-2. On the Puppet master, include tagmail in the [`reports`](https://docs.puppetlabs.com/references/latest/configuration.html#reports) setting in the master section:
+2. On the Puppet server, include tagmail in the [`reports`](https://docs.puppetlabs.com/references/latest/configuration.html#reports) setting in the server section:
 
   ```
-[master]
+[server]
 tagmap = $confdir/tagmail.conf
 reports = puppetdb,console,tagmail
   ```
 
-3. If you use anti-spam controls such as grey-listing on your mail server, whitelist Puppet's sending email address to ensure your tagmail reports are not discarded as spam. This setting is controlled by the `reportfrom` setting in `puppet.conf`.
+3. If you use anti-spam controls such as grey-listing on your mail server, allowlist Puppet's sending email address to ensure your tagmail reports are not discarded as spam. This setting is controlled by the `reportfrom` setting in `puppet.conf`.
 
-4. In the Puppet confdir on your master, create a `tagmail.conf` file. This file will contain your email transport config options, as well as the tags themselves.
+4. In the Puppet confdir on your server, create a `tagmail.conf` file. This file will contain your email transport config options, as well as the tags themselves.
 
 ## Usage
 
@@ -99,9 +99,9 @@ webserver, !mailserver: httpadmins@example.com, you@example.com
 
 ## Limitations
 
-For an extensive list of supported operating systems, see [metadata.json](https://github.com/puppetlabs/puppetlabs-tagmail/blob/master/metadata.json)
+For an extensive list of supported operating systems, see [metadata.json](https://github.com/puppetlabs/puppetlabs-tagmail/blob/main/metadata.json)
 
-This module should be used only if you're using the JVM on the Puppet master. For older versions of Puppet, or if using the legacy Puppet master on Apache/Rack/Passenger, use Puppet's built-in tagmail feature.
+This module should be used only if you're using the JVM on the Puppet server. For older versions of Puppet, or if using the legacy Puppet server on Apache/Rack/Passenger, use Puppet's built-in tagmail feature.
 
 ## Development
 
