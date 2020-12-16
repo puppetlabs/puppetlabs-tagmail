@@ -2,9 +2,17 @@
 
 All notable changes to this project will be documented in this file. The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](http://semver.org).
 
-## [v3.4.0](https://github.com/puppetlabs/puppetlabs-tagmail/tree/v3.3.0) (2020-10-23)
+## [v3.5.0](https://github.com/puppetlabs/puppetlabs-tagmail/tree/v3.5.0) (2020-12-16)
 
-[Full Changelog](https://github.com/puppetlabs/puppetlabs-tagmail/compare/v3.3.0...v3.3.0)
+[Full Changelog](https://github.com/puppetlabs/puppetlabs-tagmail/compare/v3.4.0...v3.5.0)
+
+### Added
+
+- pdksync - \(feat\) - Add support for Puppet 7 [\#192](https://github.com/puppetlabs/puppetlabs-tagmail/pull/192) ([daianamezdrea](https://github.com/daianamezdrea))
+
+## [v3.4.0](https://github.com/puppetlabs/puppetlabs-tagmail/tree/v3.4.0) (2020-10-23)
+
+[Full Changelog](https://github.com/puppetlabs/puppetlabs-tagmail/compare/v3.3.0...v3.4.0)
 
 ### Added
 
@@ -37,6 +45,10 @@ All notable changes to this project will be documented in this file. The format 
 - \(FM-8231\) convert to use puppet\_litmus [\#134](https://github.com/puppetlabs/puppetlabs-tagmail/pull/134) ([tphoney](https://github.com/tphoney))
 - \(FM-8033\) Add RedHat 8 support [\#127](https://github.com/puppetlabs/puppetlabs-tagmail/pull/127) ([eimlav](https://github.com/eimlav))
 - Change - Do not send out reports if there are no resources included [\#109](https://github.com/puppetlabs/puppetlabs-tagmail/pull/109) ([blackknight36](https://github.com/blackknight36))
+
+### UNCATEGORIZED PRS; LABEL THEM ON GITHUB
+
+- \(maint\) modulesync 65530a4 Update Travis [\#77](https://github.com/puppetlabs/puppetlabs-tagmail/pull/77) ([michaeltlombardi](https://github.com/michaeltlombardi))
 
 ## [v3.0.0](https://github.com/puppetlabs/puppetlabs-tagmail/tree/v3.0.0) (2019-04-25)
 
