@@ -15,6 +15,8 @@
 
 The tagmail module sends Puppet log messages as email if the log messages relate to resources that have been assigned specific tags. This module provides the same functionality as the tagmail feature that was previously built into Puppet.
 
+The tagmail module is a report processor plugin that lets you sort log messages into email reports by pairing particular tags with particular email addresses. This module replaces Puppet's built-in tagmail feature, which is broken in the JVM-based PE 3.7 and completely removed in PE 3.8 and Puppet 4.0.
+
 > Note that version 1.x of the tagmail module supports only Puppet 3.7 to 3.8 and PE 3.7 to 3.8.1. For newer versions of Puppet or PE, you must upgrade to tagmail 2.0. For older versions of Puppet, use Puppet's built-in tagmail feature.
 
 ## Setup
@@ -33,7 +35,7 @@ report = true
 pluginsync = true
   ```
 
-2. On the Puppet server, include tagmail in the [`reports`](https://docs.puppetlabs.com/references/latest/configuration.html#reports) setting in the server section:
+2. On the Puppet server, include tagmail in the reports setting in the server section:
 
   ```
 [server]
@@ -51,7 +53,7 @@ reports = puppetdb,console,tagmail
 
 Tags let you set context for resources, classes, and defined types. For example, you can assign a tag to all resources associated with a particular operating system, location, or other characteristic. The tag is then included in all log messages related to those resources.
 
-Puppet's [loglevels](https://docs.puppet.com/puppet/latest/metaparameter.html#loglevel) (`debug`, `info`, `notice`, `warning`, `err`, `alert`, `emerg`, `crit`, and `verbose`) can also be used as tags, and the `all` tag always matches every log message. To learn more about tags, see [tags](http://docs.puppetlabs.com/puppet/latest/reference/lang_tags.html) in the Puppet Language docs.
+Puppet's [loglevels](https://docs.puppet.com/puppet/latest/metaparameter.html#loglevel) (`debug`, `info`, `notice`, `warning`, `err`, `alert`, `emerg`, `crit`, and `verbose`) can also be used as tags, and the `all` tag always matches every log message. To learn more about tags, see tags in the Puppet Language docs.
 
 ### Configure `tagmail.conf`
 
