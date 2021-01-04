@@ -53,7 +53,7 @@ describe 'tagmail tests', unless: UNSUPPORTED_PLATFORMS.include?(os[:family]) do
 			user {'fred':
 				ensure => present,
 			}
-			MANIFEST
+      MANIFEST
 
     apply_manifest(pp, catch_failures: true)
 
@@ -92,7 +92,7 @@ describe 'tagmail tests', unless: UNSUPPORTED_PLATFORMS.include?(os[:family]) do
 					require => Package['sendmail'],
 				}
 
-			MANIFEST
+      MANIFEST
 
     apply_manifest(pp_sendmail, catch_failures: true)
   end
@@ -103,7 +103,7 @@ describe 'tagmail tests', unless: UNSUPPORTED_PLATFORMS.include?(os[:family]) do
 					notify {'This is a test that should be present for all':
 						tag => ['undefinedtag'],
 					}
-			MANIFEST
+      MANIFEST
       it 'applies' do
         apply_manifest(pp, catch_failures: true)
       end
@@ -140,7 +140,7 @@ describe 'tagmail tests', unless: UNSUPPORTED_PLATFORMS.include?(os[:family]) do
 					notify {'This is a test that should be present for tag1':
 						tag => ['tag1'],
 					}
-			MANIFEST
+      MANIFEST
       it 'applies' do
         apply_manifest(pp, catch_failures: true)
       end
@@ -177,7 +177,7 @@ describe 'tagmail tests', unless: UNSUPPORTED_PLATFORMS.include?(os[:family]) do
 					notify {'This is a test that should be present for tag2':
 						tag => ['tag2'],
 					}
-			MANIFEST
+      MANIFEST
       it 'applies' do
         apply_manifest(pp, catch_failures: true)
       end
@@ -214,7 +214,7 @@ describe 'tagmail tests', unless: UNSUPPORTED_PLATFORMS.include?(os[:family]) do
 					notify {'This is a test that should be present for tag3':
 						tag => ['tag3'],
 					}
-			MANIFEST
+      MANIFEST
       it 'applies' do
         apply_manifest(pp, catch_failures: true)
       end
@@ -251,7 +251,7 @@ describe 'tagmail tests', unless: UNSUPPORTED_PLATFORMS.include?(os[:family]) do
 					notify {'This is a test that should be present for tag3':
 						tag => ['tag2', 'tag3'],
 					}
-			MANIFEST
+      MANIFEST
       it 'applies' do
         apply_manifest(pp, catch_failures: true)
       end
@@ -294,7 +294,7 @@ describe 'tagmail tests', unless: UNSUPPORTED_PLATFORMS.include?(os[:family]) do
 						tag => ['undefinedtag'],
 						require => File["${::settings::confdir}/tagmail.conf"]
 					}
-			MANIFEST
+      MANIFEST
       it 'applies' do
         apply_manifest(pp, catch_failures: true)
       end

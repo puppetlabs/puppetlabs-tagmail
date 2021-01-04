@@ -15,14 +15,14 @@ describe tagmail do
 
   passers = my_fixture 'tagmail_passers.conf'
   File.readlines(passers).each do |line|
-    it "should be able to parse '#{line.inspect}'" do
+    it "is able to parse '#{line.inspect}'" do
       processor.parse_tagmap(line)
     end
   end
 
   failers = my_fixture 'tagmail_failers.conf'
   File.readlines(failers).each do |line|
-    it "should not be able to parse '#{line.inspect}'" do
+    it "is not able to parse '#{line.inspect}'" do
       -> { processor.parse_tagmap(line) }.should raise_error(ArgumentError)
     end
   end
@@ -37,7 +37,7 @@ describe tagmail do
     'tag: abuse@domain.com, other@domain.com' => [['abuse@domain.com', 'other@domain.com'], ['tag'], []],
 
   }.each do |line, results|
-    it "should parse '#{line}' as #{results.inspect}" do
+    it "parses '#{line}' as #{results.inspect}" do
       processor.parse_tagmap(line).shift.should == results
     end
   end
