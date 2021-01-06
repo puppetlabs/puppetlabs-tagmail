@@ -35,7 +35,7 @@ report = true
 pluginsync = true
   ```
 
-2. On the Puppet server, include tagmail in the reports setting in the server section:
+2. On the Puppet server, include tagmail in the [`reports`](https://docs.puppetlabs.com/puppet/latest/configuration.html#reports) setting in the server section:
 
   ```
 [server]
@@ -53,7 +53,7 @@ reports = puppetdb,console,tagmail
 
 Tags let you set context for resources, classes, and defined types. For example, you can assign a tag to all resources associated with a particular operating system, location, or other characteristic. The tag is then included in all log messages related to those resources.
 
-Puppet's [loglevels](https://docs.puppet.com/puppet/latest/metaparameter.html#loglevel) (`debug`, `info`, `notice`, `warning`, `err`, `alert`, `emerg`, `crit`, and `verbose`) can also be used as tags, and the `all` tag always matches every log message. To learn more about tags, see tags in the Puppet Language docs.
+Puppet's [loglevels](https://docs.puppet.com/puppet/latest/metaparameter.html#loglevel) (`debug`, `info`, `notice`, `warning`, `err`, `alert`, `emerg`, `crit`, and `verbose`) can also be used as tags, and the `all` tag always matches every log message. To learn more about tags, see [tags](https://puppet.com/docs/puppet/latest/lang_tags.html) in the Puppet Language docs.
 
 ### Configure `tagmail.conf`
 
