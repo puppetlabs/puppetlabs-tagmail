@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](http://semver.org).
 
+## [v4.0.0](https://github.com/puppetlabs/puppetlabs-tagmail/tree/v4.0.0) (2021-02-27)
+
+[Full Changelog](https://github.com/puppetlabs/puppetlabs-tagmail/compare/v3.5.1...v4.0.0)
+
+### Changed
+
+- pdksync - Remove Puppet 5 from testing and bump minimal version to 6.0.0 [\#203](https://github.com/puppetlabs/puppetlabs-tagmail/pull/203) ([carabasdaniel](https://github.com/carabasdaniel))
+
 ## [v3.5.1](https://github.com/puppetlabs/puppetlabs-tagmail/tree/v3.5.1) (2021-02-15)
 
 [Full Changelog](https://github.com/puppetlabs/puppetlabs-tagmail/compare/v3.5.0...v3.5.1)
@@ -9,6 +17,7 @@ All notable changes to this project will be documented in this file. The format 
 ### Fixed
 
 - \(IAC-1356\) Correct broken links in readme [\#200](https://github.com/puppetlabs/puppetlabs-tagmail/pull/200) ([Disha-maker](https://github.com/Disha-maker))
+- Broken links removed from README file [\#199](https://github.com/puppetlabs/puppetlabs-tagmail/pull/199) ([Disha-maker](https://github.com/Disha-maker))
 
 ## [v3.5.0](https://github.com/puppetlabs/puppetlabs-tagmail/tree/v3.5.0) (2020-12-16)
 
@@ -28,7 +37,6 @@ All notable changes to this project will be documented in this file. The format 
 
 ### Fixed
 
-- Broken links removed from README file [\#199](https://github.com/puppetlabs/puppetlabs-tagmail/pull/199) ([Disha-maker](https://github.com/Disha-maker))
 - \(MODULES-10814\) - Replace `IO.popen` with `Puppet:Util:Execution.execute` [\#182](https://github.com/puppetlabs/puppetlabs-tagmail/pull/182) ([david22swan](https://github.com/david22swan))
 
 ## [v3.3.0](https://github.com/puppetlabs/puppetlabs-tagmail/tree/v3.3.0) (2020-07-01)
