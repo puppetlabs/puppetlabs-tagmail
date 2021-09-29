@@ -57,6 +57,12 @@
         "6",
         "7"
       ]
+    },
+    {
+      "operatingsystem": "Rocky",
+      "operatingsystemrelease": [
+        "8"
+      ]
     }
   ],
   "requirements": [
