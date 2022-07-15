@@ -3,12 +3,13 @@
 #### Table of Contents
 
 1. [Module description - What the module does and why it is useful](#description)
-2. [Setup - The basics of getting started with tagmail](#setup)
+2. [Support](#support)
+3. [Setup - The basics of getting started with tagmail](#setup)
    * [Requirements](#requirements)
    * [Beginning with tagmail](#beginning-with-tagmail)
-3. [Usage - Configuration options and additional functionality](#usage)
-4. [Limitations - OS compatibility, etc.](#limitations)
-5. [Development - Guide for contributing to the module](#development)
+4. [Usage - Configuration options and additional functionality](#usage)
+5. [Limitations - OS compatibility, etc.](#limitations)
+6. [Development - Guide for contributing to the module](#development)
 
 
 ## Description
@@ -18,6 +19,13 @@ The tagmail module sends Puppet log messages as email if the log messages relate
 The tagmail module is a [report processor](https://puppet.com/docs/puppet/latest/reporting_write_processors.html) plugin that lets you sort log messages into email reports by pairing particular tags with particular email addresses. This module replaces Puppet's built-in tagmail feature, which is broken in the JVM-based PE 3.7 and completely removed in PE 3.8 and Puppet 4.0.
 
 > Note that version 1.x of the tagmail module supports only Puppet 3.7 to 3.8 and PE 3.7 to 3.8.1. For newer versions of Puppet or PE, you must upgrade to tagmail 2.0. For older versions of Puppet, use Puppet's built-in tagmail feature.
+
+## Support
+
+This module is not supported or maintained by Puppet and does not qualify for Puppet Support plans.
+It's provided without guarantee or warranty and you can use it at your own risk.
+All bugfixes, updates, and new feature development will come from community contributions.
+[tier:community]
 
 ## Setup
 
