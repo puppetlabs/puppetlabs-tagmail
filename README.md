@@ -73,6 +73,10 @@ To configure the tagmail module, edit the `tagmail.conf` file you created in Ste
 
    * `sendmail`, with a path to your sendmail binary (by default, `/usr/sbin/sendmail`).
    * `smtpserver`, `smtpport`, and `smtphelo`. If you do not specify `smtpserver`, tagmail defaults to using `sendmail`.
+     * SMTP is implemented with [Ruby Net::SMTP](https://github.com/ruby/net-smtp/blob/9e44412d0da2dc7697bc45973e9ed12f5b4acfb5/lib/net/smtp.rb#L477-L529), and uses those default values.
+     * TLS, `STARTTLS` are optional, avilable via `smtptls` (default off), `smtpstarttls` (default auto).
+     * TLS verification is configured with `smtptls_verify` (default true), `smtptls_hostname` (default empty)
+     * Authentication is configured with `smtpuser`, `smtpsecret`, `smtpauthtype`
 
 1. In the `[tagmap]` section , specify tags and email addresses. Each line should include both:
 

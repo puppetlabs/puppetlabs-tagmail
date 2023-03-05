@@ -118,6 +118,42 @@ Puppet::Reports.register_report(:tagmail) do
       if !(config_hash[:smtphelo]) || config_hash[:smtphelo] == ''
         config_hash[:smtphelo] = 'puppet.local'
       end
+
+      if !(config_hash[:smtpuser]) || config_hash[:smtpuser] == ''
+        config_hash[:smtpuser] = nil
+      end
+
+      if !(config_hash[:smtpsecret]) || config_hash[:smtpsecret] == ''
+        config_hash[:smtpsecret] = nil
+      end
+
+      if !(config_hash[:smtpauthtype]) || config_hash[:smtpauthtype] == ''
+        config_hash[:smtpauthtype] = nil
+      end
+
+      if !(config_hash[:smtptls]) || config_hash[:smtptls] == ''
+        # Match upstream Net::SMTP default for tls
+        # https://github.com/ruby/net-smtp/blob/9e44412d0da2dc7697bc45973e9ed12f5b4acfb5/lib/net/smtp.rb#L520
+        config_hash[:smtptls] = false
+      end
+
+      if !(config_hash[:smtpstarttls]) || config_hash[:smtpstarttls] == ''
+        # Match upstream Net::SMTP default for starttls
+        # https://github.com/ruby/net-smtp/blob/9e44412d0da2dc7697bc45973e9ed12f5b4acfb5/lib/net/smtp.rb#L520
+        config_hash[:smtpstarttls] = :auto
+      end
+
+      if !(config_hash[:smtptls_verify]) || config_hash[:smtptls_verify] == ''
+        # Match upstream Net::SMTP default for tls_verify
+        # https://github.com/ruby/net-smtp/blob/9e44412d0da2dc7697bc45973e9ed12f5b4acfb5/lib/net/smtp.rb#L521
+        config_hash[:smtptls_verify] = true
+      end
+
+      if !(config_hash[:smtptls_hostname]) || config_hash[:smtptls_hostname] == ''
+        # Match upstream Net::SMTP default for tls_hostname
+        # https://github.com/ruby/net-smtp/blob/9e44412d0da2dc7697bc45973e9ed12f5b4acfb5/lib/net/smtp.rb#L521
+        config_hash[:smtptls_hostname] = true
+      end
     end
 
     if !(config_hash[:sendmail]) || config_hash[:sendmail] == ''
@@ -218,7 +254,17 @@ Puppet::Reports.register_report(:tagmail) do
     # Thread.new {
     if tagmail_conf[:smtpserver] && tagmail_conf[:smtpserver] != 'none'
       begin
-        Net::SMTP.start(tagmail_conf[:smtpserver], tagmail_conf[:smtpport], tagmail_conf[:smtphelo]) do |smtp|
+        Net::SMTP.start(tagmail_conf[:smtpserver],
+                        tagmail_conf[:smtpport],
+                        helo: tagmail_conf[:smtphelo],
+                        user: tagmail_conf[:smtpuser],
+                        secret: tagmail_conf[:smtpsecret],
+                        authtype: tagmail_conf[:smtpauthtype],
+                        tls: tagmail_conf[:smtptls],
+                        starttls: tagmail_conf[:smtpstarttls],
+                        tls_verify: tagmail_conf[:smtptls_verify],
+                        tls_hostname: tagmail_conf[:smtptls_hostname],
+                       ) do |smtp|
           reports.each do |emails, messages|
             smtp.open_message_stream(tagmail_conf[:reportfrom], *emails) do |p|
               p.puts "From: #{tagmail_conf[:reportfrom]}"

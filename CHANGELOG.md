@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](http://semver.org).
 
+## [Unreleased]
+
+### Added
+
+- SMTP authentication & TLS support [\#243](https://github.com/puppetlabs/puppetlabs-tagmail/pull/243) ([robbat2](https://github.com/robbat2))
+
 ## [v4.1.0](https://github.com/puppetlabs/puppetlabs-tagmail/tree/v4.1.0) (2021-08-25)
 
 [Full Changelog](https://github.com/puppetlabs/puppetlabs-tagmail/compare/v4.0.0...v4.1.0)
