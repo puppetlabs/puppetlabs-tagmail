@@ -118,6 +118,47 @@ Puppet::Reports.register_report(:tagmail) do
       if !(config_hash[:smtphelo]) || config_hash[:smtphelo] == ''
         config_hash[:smtphelo] = 'puppet.local'
       end
+
+      if !(config_hash[:smtpuser]) || config_hash[:smtpuser] == ''
+        config_hash[:smtpuser] = nil
+      end
+
+      if !(config_hash[:smtpsecret]) || config_hash[:smtpsecret] == ''
+        config_hash[:smtpsecret] = nil
+      end
+
+      if !(config_hash[:smtpauthtype]) || config_hash[:smtpauthtype] == ''
+        config_hash[:smtpauthtype] = nil
+      end
+
+      if !(config_hash[:smtptls]) || config_hash[:smtptls] == ''
+        # Match upstream Net::SMTP default for tls
+        # https://github.com/ruby/net-smtp/blob/9e44412d0da2dc7697bc45973e9ed12f5b4acfb5/lib/net/smtp.rb#L520
+        config_hash[:smtptls] = false
+      end
+      # booleanify
+      config_hash[:smtptls] = %w[1 true yes].include? ( config_hash[:smtptls]&.to_s&.downcase )
+
+      if !(config_hash[:smtpstarttls]) || config_hash[:smtpstarttls] == ''
+        # Match upstream Net::SMTP default for starttls
+        # https://github.com/ruby/net-smtp/blob/9e44412d0da2dc7697bc45973e9ed12f5b4acfb5/lib/net/smtp.rb#L520
+        config_hash[:smtpstarttls] = :auto
+      end
+      # Symify
+      config_hash[:smtpstarttls] = config_hash[:smtpstarttls].to_s.downcase.to_sym
+
+      if !(config_hash[:smtptls_verify]) || config_hash[:smtptls_verify] == ''
+        # Match upstream Net::SMTP default for tls_verify
+        # https://github.com/ruby/net-smtp/blob/9e44412d0da2dc7697bc45973e9ed12f5b4acfb5/lib/net/smtp.rb#L521
+        config_hash[:smtptls_verify] = true
+      end
+      config_hash[:smtptls_verify] = %w[1 true yes].include? ( config_hash[:smtptls]&.to_s&.downcase )
+
+      if !(config_hash[:smtptls_hostname]) || config_hash[:smtptls_hostname] == ''
+        # Match upstream Net::SMTP default for tls_hostname
+        # https://github.com/ruby/net-smtp/blob/9e44412d0da2dc7697bc45973e9ed12f5b4acfb5/lib/net/smtp.rb#L521
+        config_hash[:smtptls_hostname] = nil
+      end
     end
 
     if !(config_hash[:sendmail]) || config_hash[:sendmail] == ''
@@ -218,7 +259,27 @@ Puppet::Reports.register_report(:tagmail) do
     # Thread.new {
     if tagmail_conf[:smtpserver] && tagmail_conf[:smtpserver] != 'none'
       begin
-        Net::SMTP.start(tagmail_conf[:smtpserver], tagmail_conf[:smtpport], tagmail_conf[:smtphelo]) do |smtp|
+        # Warning: Net::SMTP.start only started to support hash
+        # inputs fairly late, and even puppetserver-7.23.0 ships an old
+        # Net::SMTP without the hash support.
+        # So we cannot use the shiny Net::SMTP.start(server, port, helo:..,
+        # user:..., [etc]) signature.
+        # Instead we must use the seperate new & start variant.
+        conn = Net::SMTP.new(tagmail_conf[:smtpserver], tagmail_conf[:smtpport])
+
+        # Setup TLS:
+        conn.enable_starttls_auto if tagmail_conf[:smtpstarttls]&.downcase&.to_sym == :auto
+        conn.enable_starttls if tagmail_conf[:smtpstarttls]&.downcase&.to_sym == :always
+        conn.enable_tls if tagmail_conf[:smtptls]&.to_s.downcase === 'true'
+        conn.tls_hostname = tagmail_conf[:smtptls_hostname] if tagmail_conf[:smtptls_hostname] and smtp.respond_to?(:tls_hostname)
+        conn.tls_verify = tagmail_conf[:smtptls_verify] if tagmail_conf[:smtptls_verify] and smtp.respond_to?(:tls_verify)
+
+        # Now actually run the SMTP exchange (will upgrade to TLS as needed above)
+        conn.start(helo=tagmail_conf[:smtphelo],
+                   user=tagmail_conf[:smtpuser],
+                   secret=tagmail_conf[:smtpsecret],
+                   authtype=tagmail_conf[:smtpauthtype],
+                  ) do |smtp|
           reports.each do |emails, messages|
             smtp.open_message_stream(tagmail_conf[:reportfrom], *emails) do |p|
               p.puts "From: #{tagmail_conf[:reportfrom]}"
